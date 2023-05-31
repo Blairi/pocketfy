@@ -31,4 +31,17 @@ public class AccountServiceImpl implements AccountService{
 
         return accounts.stream().filter(predicate).collect(Collectors.toList());
     }
+
+    @Override
+    public AccountDTO getAccountById(Long id) {
+
+        Predicate<? super AccountDTO> predicate =
+                account -> account.getId().equals(id);
+
+        Optional<AccountDTO> account = accounts.stream().filter(predicate).findFirst();
+
+        if(account.isEmpty()) throw new RuntimeException("Account not found.");
+
+        return account.get();
+    }
 }
