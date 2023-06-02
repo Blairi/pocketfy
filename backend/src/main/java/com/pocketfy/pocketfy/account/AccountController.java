@@ -19,4 +19,9 @@ public class AccountController {
     public List<AccountDTO> retrieveAccountsByUserId(@PathVariable Long id) {
         return accountService.getAccountsByUserId(id);
     }
+
+    @GetMapping("users/{userId}/accounts/{accountId}")
+    public AccountDTO retrieveAccountById(@PathVariable Long userId, @PathVariable Long accountId) {
+        return accountService.getAccountById(accountId);
+    }
 }
