@@ -7,4 +7,6 @@ public interface AccountService {
 
     public AccountDTO getAccountById(Long id);
 
+    public void newAccount(AccountDTO account);
+
 }

@@ -44,4 +44,9 @@ public class AccountServiceImpl implements AccountService{
 
         return account.get();
     }
+
+    @Override
+    public void newAccount(AccountDTO account) {
+        accounts.add(account);
+    }
 }
