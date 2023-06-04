@@ -1,8 +1,8 @@
 package com.pocketfy.pocketfy.account;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +18,12 @@ public class AccountController {
     @GetMapping("users/{id}/accounts")
     public List<AccountDTO> retrieveAccountsByUserId(@PathVariable Long id) {
         return accountService.getAccountsByUserId(id);
+    }
+
+    @PostMapping("users/{id}/accounts")
+    public ResponseEntity<Object> createAccount(@RequestBody AccountDTO account) {
+        accountService.newAccount(account);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("users/{userId}/accounts/{accountId}")
