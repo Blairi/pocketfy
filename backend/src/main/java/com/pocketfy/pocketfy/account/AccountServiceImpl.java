@@ -47,6 +47,10 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void newAccount(AccountDTO account) {
+        // TODO: Remove hardcoded user
+        account.setUserId(1L);
+
+        account.setId(++accountCount);
         accounts.add(account);
     }
 }
