@@ -8,4 +8,6 @@ public interface TransactionService {
 
     public List<TransactionDTO> getTransactionsByUserId(Long userId);
 
+    public void newTransaction(TransactionDTO transaction);
+
 }
