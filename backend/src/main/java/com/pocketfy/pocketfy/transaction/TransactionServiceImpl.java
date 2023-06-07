@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImpl implements TransactionService{
@@ -33,5 +34,18 @@ public class TransactionServiceImpl implements TransactionService{
         if(transaction.isEmpty()) throw new RuntimeException("Transaction not found.");
 
         return transaction.get();
+    }
+
+    @Override
+    public List<TransactionDTO> getTransactionsByUserId(Long userId) {
+        Predicate<? super TransactionDTO> predicate =
+                transaction -> transaction.getUserId().equals(userId);
+
+        return transactions.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    @Override
+    public void newTransaction(TransactionDTO transaction) {
+
     }
 }
