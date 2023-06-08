@@ -1,6 +1,5 @@
 package com.pocketfy.pocketfy.transaction;
 
-import com.pocketfy.pocketfy.account.AccountDTO;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,6 +45,10 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     public void newTransaction(TransactionDTO transaction) {
+        // TODO: Remove hardcoded user
+        transaction.setUserId(1L);
 
+        transaction.setId(++transactionCount);
+        transactions.add(transaction);
     }
 }
