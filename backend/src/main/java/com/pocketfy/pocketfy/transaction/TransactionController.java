@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class TransactionController {
 
@@ -30,6 +32,12 @@ public class TransactionController {
         AccountDTO account = accountService.getAccountById(accountId);
 
         return transactionService.getTransactionById(transactionId);
+    }
+
+    @GetMapping("/users/{userId}/accounts/{accountId}/transactions")
+    public List<TransactionDTO> retrieveTransactions(
+            @PathVariable Long userId, @PathVariable Long accountId) {
+        return transactionService.getTransactionsByUserId(userId);
     }
 
 }
