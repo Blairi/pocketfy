@@ -10,4 +10,6 @@ public interface TransactionService {
 
     public void newTransaction(TransactionDTO transaction);
 
+    public void deleteTransactionById(Long id);
+
 }
