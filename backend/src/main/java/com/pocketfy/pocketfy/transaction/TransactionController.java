@@ -6,10 +6,7 @@ import com.pocketfy.pocketfy.user.UserDTO;
 import com.pocketfy.pocketfy.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +38,12 @@ public class TransactionController {
     public List<TransactionDTO> retrieveTransactions(
             @PathVariable Long userId, @PathVariable Long accountId) {
         return transactionService.getTransactionsByUserId(userId);
+    }
+
+    @PostMapping("/users/{userId}/accounts/{accountId}/transactions")
+    public ResponseEntity<Object> createTransaction(@RequestBody TransactionDTO transaction) {
+        transactionService.newTransaction(transaction);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/users/{userId}/accounts/{accountId}/transactions/{id}")
