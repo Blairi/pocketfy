@@ -9,4 +9,6 @@ public interface AccountService {
 
     public void newAccount(AccountDTO account);
 
+    public void deleteAccountById(Long id);
+
 }
