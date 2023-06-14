@@ -53,4 +53,10 @@ public class AccountServiceImpl implements AccountService{
         account.setId(++accountCount);
         accounts.add(account);
     }
+
+    @Override
+    public void deleteAccountById(Long id) {
+        Predicate<? super AccountDTO> predicate = account -> account.getId().equals(id);
+        accounts.removeIf(predicate);
+    }
 }
