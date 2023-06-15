@@ -30,4 +30,10 @@ public class AccountController {
     public AccountDTO retrieveAccountById(@PathVariable Long userId, @PathVariable Long accountId) {
         return accountService.getAccountById(accountId);
     }
+
+    @DeleteMapping("users/{userId}/accounts/{accountId}")
+    public ResponseEntity<Object> deleteAccountById(@PathVariable Long userId, @PathVariable Long accountId) {
+        accountService.deleteAccountById(accountId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
