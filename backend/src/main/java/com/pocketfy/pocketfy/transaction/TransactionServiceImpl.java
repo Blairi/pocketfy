@@ -57,4 +57,10 @@ public class TransactionServiceImpl implements TransactionService{
         Predicate<? super TransactionDTO> predicate = transaction -> transaction.getId().equals(id);
         transactions.removeIf(predicate);
     }
+
+    @Override
+    public void updateTransaction(TransactionDTO transaction) {
+        deleteTransactionById(transaction.getId());
+        transactions.add(transaction);
+    }
 }
