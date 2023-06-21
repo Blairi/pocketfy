@@ -49,6 +49,7 @@ public class TransactionServiceImpl implements TransactionService{
         transaction.setUserId(1L);
 
         transaction.setId(++transactionCount);
+        transaction.setDate(LocalDate.now());
         transactions.add(transaction);
     }
 
