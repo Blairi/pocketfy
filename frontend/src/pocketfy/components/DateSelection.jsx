@@ -6,20 +6,22 @@ export const DateSelection = () => {
 
   const { date, setDate, filterSelected } = useContext(FilterContext);
 
-  const [manipulate, setManipulate] = useState({amount: null, unit: null});
+  const [unit, setUnit] = useState(filterSelected);
 
   useEffect(() => {
 
     if(filterSelected === "day") {
-      setManipulate({amount: 1, unit: "day"});
+      setUnit("day");
     }
 
     if(filterSelected === "week") {
-      setManipulate({amount: 7, unit: "day"});
+      setDate(date.startOf("week"));
+      setUnit("week");
     }
 
     if(filterSelected === "month") {
-      setManipulate({amount: 30, unit: "day"});
+      setDate(date.startOf("month"));
+      setUnit("month");
     }
 
   }, [filterSelected]);
@@ -29,14 +31,20 @@ export const DateSelection = () => {
 
       <button 
         className="btn btn-primary" 
-        onClick={() => setDate(date.subtract(manipulate.amount, manipulate.unit))}
+        onClick={() => setDate(date.subtract(1, unit))}
       >&#10094;</button>
 
-      <span className="font-black">{date.format("DD/MMM/YYYY")}</span>
+      <span className="font-black">
+        {
+          filterSelected === "day" ? date.format("DD/MMM/YYYY") :
+          filterSelected === "week" ? ( date.format("DD/MMM/YYYY") + " - " + date.endOf("week").format("DD/MMM/YYYY") ) :
+          filterSelected === "month" ? date.format("MMMM/YYYY") : ""
+        }
+      </span>
 
       <button 
         className="btn btn-primary" 
-        onClick={() => setDate(date.add(manipulate.amount, manipulate.unit))}
+        onClick={() => setDate(date.add(1, unit))}
       >&#10095;</button>
     </nav>
   )
