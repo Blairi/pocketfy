@@ -3,7 +3,7 @@ import { FilterContext } from "../contexts/FilterContext";
 
 export const FilterDrawer = () => {
 
-  const { setShowFilter } = useContext(FilterContext);
+  const { setShowFilter, filterSelected, setFilterSelected } = useContext(FilterContext);
 
   const [isHiding, setIsHiding] = useState(false);
 
@@ -42,14 +42,51 @@ export const FilterDrawer = () => {
 
         <div className="divider"></div>
 
-        <div className="flex flex-col gap-5">
-          <label className="btn btn-outline btn-secondary" htmlFor="day">Day</label>
-          <input type="radio" name="filter" id="day" className="hidden" />
-          <label className="btn btn-outline btn-secondary" htmlFor="week">Week</label>
-          <input type="radio" name="filter" id="week" className="hidden" />
-          <label className="btn btn-outline btn-secondary" htmlFor="month">Month</label>
-          <input type="radio" name="filter" id="month" className="hidden" />
-        </div>
+        <form className="flex flex-col gap-5">
+
+          <label 
+            className={`btn btn-outline btn-secondary 
+              ${filterSelected === "day" ? "btn-active" : ""}`
+            } 
+            htmlFor="day"
+          >Day</label>
+          <input 
+            type="radio" 
+            name="filter" 
+            id="day" 
+            className="hidden" 
+            onChange={()=> setFilterSelected("day")}
+          />
+
+          <label 
+            className={`btn btn-outline btn-secondary 
+              ${filterSelected === "week" ? "btn-active" : ""}`
+            } 
+            htmlFor="week"
+          >Week</label>
+          <input 
+            type="radio" 
+            name="filter" 
+            id="week" 
+            className="hidden" 
+            onChange={()=> setFilterSelected("week")}
+          />
+
+          <label 
+            className={`btn btn-outline btn-secondary 
+              ${filterSelected === "month" ? "btn-active" : ""}`
+            } 
+            htmlFor="month"
+          >Month</label>
+          <input 
+            type="radio" 
+            name="filter" 
+            id="month" 
+            className="hidden" 
+            onChange={()=> setFilterSelected("month")}
+          />
+
+        </form>
 
       </aside>
     </div>
