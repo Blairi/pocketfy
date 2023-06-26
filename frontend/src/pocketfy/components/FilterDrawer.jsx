@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { FilterContext } from "../contexts/FilterContext";
+import dayjs from "dayjs";
 
 export const FilterDrawer = () => {
 
-  const { setShowFilter, filterSelected, setFilterSelected } = useContext(FilterContext);
+  const { setShowFilter, filterSelected, setFilterSelected, setDate } = useContext(FilterContext);
 
   const [isHiding, setIsHiding] = useState(false);
 
@@ -17,6 +18,11 @@ export const FilterDrawer = () => {
       }, 800);
     }
   };
+
+  const handleToday = () => {
+    setFilterSelected("day");
+    setDate(dayjs());
+  }
 
   return (
     <div
@@ -87,6 +93,13 @@ export const FilterDrawer = () => {
           />
 
         </form>
+
+        <div className="divider"></div>
+
+        <button 
+          className="btn btn-outline btn-secondary w-full"
+          onClick={ handleToday }
+        >Today</button>
 
       </aside>
     </div>
