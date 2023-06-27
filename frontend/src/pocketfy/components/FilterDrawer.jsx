@@ -11,6 +11,7 @@ export const FilterDrawer = () => {
   const handleContainerClick = (e) => {
     if (e.target === e.currentTarget) {
 
+      // Fade out animation
       setIsHiding(true);
       
       setTimeout(() => {
@@ -22,12 +23,24 @@ export const FilterDrawer = () => {
   const handleToday = () => {
     setFilterSelected("day");
     setDate(dayjs());
-    setShowFilter(false);
+    
+    // Fade out animation
+    setIsHiding(true);
+      
+    setTimeout(() => {
+      setShowFilter(false);
+    }, 800);
   }
 
   const setFilter = (filter) => {
     setFilterSelected(filter);
-    setShowFilter(false);
+
+    // Fade out animation
+    setIsHiding(true);
+      
+    setTimeout(() => {
+      setShowFilter(false);
+    }, 800);
   }
 
   return (
