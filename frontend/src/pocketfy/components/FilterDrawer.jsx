@@ -22,6 +22,12 @@ export const FilterDrawer = () => {
   const handleToday = () => {
     setFilterSelected("day");
     setDate(dayjs());
+    setShowFilter(false);
+  }
+
+  const setFilter = (filter) => {
+    setFilterSelected(filter);
+    setShowFilter(false);
   }
 
   return (
@@ -61,7 +67,7 @@ export const FilterDrawer = () => {
             name="filter" 
             id="day" 
             className="hidden" 
-            onChange={()=> setFilterSelected("day")}
+            onChange={()=> setFilter("day")}
           />
 
           <label 
@@ -75,7 +81,7 @@ export const FilterDrawer = () => {
             name="filter" 
             id="week" 
             className="hidden" 
-            onChange={()=> setFilterSelected("week")}
+            onChange={()=> setFilter("week")}
           />
 
           <label 
@@ -89,7 +95,7 @@ export const FilterDrawer = () => {
             name="filter" 
             id="month" 
             className="hidden" 
-            onChange={()=> setFilterSelected("month")}
+            onChange={()=> setFilter("month")}
           />
 
         </form>
