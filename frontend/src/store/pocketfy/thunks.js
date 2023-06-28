@@ -1,14 +1,24 @@
 import { loadLocalAccounts } from "../../service/local";
-import { setAccounts } from "./PocketfySlice";
+import { setAccounts, setSelectedAccount } from "./PocketfySlice";
 
 export const startLoadingAccounts = () => {
-  return async(dispatch, getState) => {
+  return async(dispatch) => {
 
     let accounts = [];
 
-    // TODO: check if user is logged
     accounts = loadLocalAccounts();
 
     dispatch( setAccounts(accounts) );
+  }
+}
+
+export const startSelectAccount = (id) => {
+  return async(dispatch, getState) => {
+
+    const { accounts } = getState().pocketfy;
+
+    const accountFound = accounts.find((account) => account.id === id);
+
+    dispatch( setSelectedAccount(accountFound) );
   }
 }
