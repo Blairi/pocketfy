@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { FilterContext } from "../contexts/FilterContext";
+import { AccountSelector } from "./AccountSelector";
 import dayjs from "dayjs";
 
 export const FilterDrawer = () => {
@@ -57,13 +58,7 @@ export const FilterDrawer = () => {
       }
       >
 
-          <div className="dropdown flex">
-            <button className="btn btn-outline btn-accent w-full">All accounts</button>
-            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex gap-3">
-              <li><button className="btn btn-outline btn-accent">Cash</button></li>
-              <li><button className="btn btn-outline btn-accent">Visa</button></li>
-            </ul>
-          </div>
+        <AccountSelector />
 
         <div className="divider"></div>
 
