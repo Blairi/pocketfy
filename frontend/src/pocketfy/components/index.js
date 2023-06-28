@@ -6,3 +6,4 @@ export * from "./TransactionForm";
 export * from "./NewTransaction";
 export * from "./Home";
 export * from "./FilterDrawer";
+export * from "./AccountSelector";
