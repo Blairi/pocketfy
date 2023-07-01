@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form } from 'formik';
 import { TransactionFormContext } from "../contexts/TransactionFormContext";
 import { loadCategories } from "../../service/online/loadCategories";
+import { startSetTransaction } from "../../store/pocketfy/thunks";
 
 const DepositsIcon = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -19,13 +20,15 @@ export const TransactionForm = () => {
 
   const { accounts, accountSelected } = useSelector(state => state.pocketfy);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // TODO: Use thunks instaed
     setCategories( loadCategories() );
   }, []);
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch( startSetTransaction(values) );
   }
 
   return (
