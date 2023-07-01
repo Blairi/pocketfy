@@ -29,7 +29,10 @@ export const TransactionForm = () => {
   }, []);
 
   const onSubmit = (values) => {
+    // Save transaction
     dispatch( startSetTransaction(values) );
+    // Close the form
+    setShowTransactionForm(false);
   }
 
   return (
