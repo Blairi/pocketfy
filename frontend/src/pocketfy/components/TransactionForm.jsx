@@ -4,6 +4,7 @@ import { Formik, Field, Form } from 'formik';
 import { TransactionFormContext } from "../contexts/TransactionFormContext";
 import { loadCategories } from "../../service/online/loadCategories";
 import { startSetTransaction } from "../../store/pocketfy/thunks";
+import { Loading } from "../ui";
 
 const DepositsIcon = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -18,7 +19,7 @@ export const TransactionForm = () => {
 
   const [categories, setCategories] = useState([]);
 
-  const { accounts, accountSelected } = useSelector(state => state.pocketfy);
+  const { accounts, accountSelected, isLoading } = useSelector(state => state.pocketfy);
 
   const dispatch = useDispatch();
 
@@ -53,7 +54,7 @@ export const TransactionForm = () => {
           amount: "",
           description: "",
           category: "",
-          account: accountSelected.id,
+          account: accountSelected?.id,
           date: new Date().toISOString().slice(0, 10),
         }}
       >
@@ -178,6 +179,8 @@ export const TransactionForm = () => {
           </Form>
         )}
       </Formik>
+
+      { isLoading && <Loading /> }
 
     </div>
   )
