@@ -14,6 +14,9 @@ export const pocketfySlice = createSlice({
     setSelectedAccount: (state, action) => {
       state.accountSelected = action.payload;
     },
+    setTransactions: (state, action) => {
+      state.transactions = action.payload;
+    },
     setTransaction: (state, action) => {
       state.transactions.push( action.payload );
     },
@@ -21,4 +24,4 @@ export const pocketfySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setAccounts, setSelectedAccount, setTransaction } = pocketfySlice.actions;
+export const { setAccounts, setSelectedAccount, setTransactions, setTransaction } = pocketfySlice.actions;
