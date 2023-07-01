@@ -1,5 +1,5 @@
-import { loadLocalAccounts } from "../../service/local";
-import { setAccounts, setSelectedAccount } from "./PocketfySlice";
+import { loadLocalAccounts, saveLocalTransaction } from "../../service/local";
+import { setAccounts, setSelectedAccount, setTransaction } from "./PocketfySlice";
 
 export const startLoadingAccounts = () => {
   return async(dispatch) => {
@@ -20,5 +20,14 @@ export const startSelectAccount = (id) => {
     const accountFound = accounts.find((account) => account.id === id);
 
     dispatch( setSelectedAccount(accountFound) );
+  }
+}
+
+export const startSetTransaction = (transaction) => {
+  return async(dispatch) => {
+
+    saveLocalTransaction(transaction);
+
+    dispatch( setTransaction(transaction) );
   }
 }
