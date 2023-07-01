@@ -4,7 +4,7 @@ import { FilterContext } from "../contexts/FilterContext";
 import { TransactionFormProvider } from "../contexts/TransactionFormProvider"
 import { PocketfyLayout } from "../layout/PocketfyLayout"
 import { useDispatch } from 'react-redux';
-import { startLoadingAccounts, startSelectAccount } from "../../store/pocketfy/thunks";
+import { startLoadingAccounts, startLoadingTransactions, startSelectAccount } from "../../store/pocketfy/thunks";
 
 export const PocketfyPage = () => {
 
@@ -15,6 +15,7 @@ export const PocketfyPage = () => {
   useEffect(() => {
     dispatch( startLoadingAccounts() );
     dispatch( startSelectAccount(-1) );
+    dispatch( startLoadingTransactions() );
   }, [])
 
   return (
