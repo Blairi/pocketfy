@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Formik, Field, Form } from 'formik';
 import { TransactionFormContext } from "../contexts/TransactionFormContext";
 import { loadCategories } from "../../service/online/loadCategories";
@@ -17,8 +17,11 @@ export const TransactionForm = () => {
 
   const [categories, setCategories] = useState([]);
 
+  const { accounts, accountSelected } = useSelector(state => state.pocketfy);
+
   useEffect(() => {
-    setCategories(loadCategories());
+    // TODO: Use thunks instaed
+    setCategories( loadCategories() );
   }, []);
 
   const onSubmit = (values) => {
@@ -47,11 +50,13 @@ export const TransactionForm = () => {
           amount: "",
           description: "",
           category: "",
+          account: accountSelected.id,
+          date: new Date().toISOString().slice(0, 10),
         }}
       >
         {({ values }) => (
           <Form>
-            <div className="flex flex-col items-center px-3 py-5">
+            <div className="px-3 py-5 grid place-items-center space-y-5">
 
               <div className="form-control w-full max-w-xs">
                 <label className="label">
@@ -71,6 +76,7 @@ export const TransactionForm = () => {
                   />
                 </div>
               </div>
+
               <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Description (optionally)</span>
@@ -84,31 +90,88 @@ export const TransactionForm = () => {
                 />
               </div>
 
-              <div className="flex gap-3">
-                {categories.map((category) => (
-                  <div 
-                    key={category.id}
-                    className={`w-16 h-16 ${category.id === values.category ? "bg-red-500" : ""}`}
-                  >
-                    <label 
-                      htmlFor={ category.id }
-                      className={`flex flex-col justify-center items-center`}
+              <div className="w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Choose a category</span>
+                </label>
+                <div className="flex gap-2 flex-wrap">
+                  {categories.map((category, key) => (
+                    <div 
+                      key={ key }
+                      className={`w-16 h-16 p-1 border-2 rounded-md hover:bg-primary transition ${category.id == values.category ? "bg-primary-focus border-primary" : "border-neutral"}`
+                      }
                     >
-                      <DepositsIcon />
-                      {category.name}
-                    </label>
-                    <Field
-                      type="radio"
-                      name="category"
-                      className="hidden"
-                      value={category.id}
-                      id={category.id}
-                    />
-                  </div>
-                ))}
+                      <label 
+                        htmlFor={`category-${category.id}`}
+                        className={`flex flex-col justify-center h-full items-center ${category.id == values.category ? "text-white" : ""}`
+                        }
+                      >
+                        <DepositsIcon />
+                        {category.name}
+                      </label>
+                      <Field
+                        type="radio"
+                        name="category"
+                        className="hidden"
+                        value={parseInt(category.id)}
+                        id={`category-${category.id}`}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              <div className="w-full max-w-xs">
+
+                <label className="label">
+                  <span className="label-text">Choose a account</span>
+                </label>
+
+                <div className="flex flex-wrap gap-2">
+                  {
+                    accounts.map((account, key) => (
+                      <div 
+                        key={ key }
+                        className={`rounded-md p-2 hover:bg-primary transition ${account.id == values.account ? "bg-primary-focus" : "bg-neutral"}`}
+                      >
+                        <label 
+                          htmlFor={`account-${account.id}`}
+                          className={`${account.id == values.account ? "text-white" : ""}`}
+                        >
+                          {account.name}
+                        </label>
+                        <Field
+                          type="radio"
+                          name="account"
+                          className="hidden"
+                          value={account.id}
+                          id={`account-${account.id}`}
+                        />
+                      </div>
+                    ))
+                  }
+                </div>
+
+              </div>
+
+              <div className="w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Date</span>
+                </label>
+                <div className="flex">
+                  <Field
+                    className="p-1"
+                    type="date"
+                    name="date"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full max-w-xs">
+                <button className="btn btn-primary w-full" type="submit">Save</button>
+              </div>
+
             </div>
-            {values.category}
           </Form>
         )}
       </Formik>
