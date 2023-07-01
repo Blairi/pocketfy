@@ -6,8 +6,12 @@ export const pocketfySlice = createSlice({
     accounts: [],
     accountSelected: null,
     transactions: [],
+    isLoading: false,
   },
   reducers: {
+    setIsLoading: (state) => {
+      state.isLoading = true;
+    },
     setAccounts: (state, action ) => {
       state.accounts = action.payload;
     },
@@ -19,9 +23,16 @@ export const pocketfySlice = createSlice({
     },
     setTransaction: (state, action) => {
       state.transactions.push( action.payload );
+      state.isLoading = false;
     },
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setAccounts, setSelectedAccount, setTransactions, setTransaction } = pocketfySlice.actions;
+export const { 
+  setAccounts, 
+  setIsLoading,
+  setSelectedAccount, 
+  setTransactions, 
+  setTransaction 
+} = pocketfySlice.actions;
