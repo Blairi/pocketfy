@@ -15,7 +15,7 @@ const DepositsIcon = () => {
 
 export const TransactionForm = () => {
 
-  const { setShowTransactionForm } = useContext(TransactionFormContext);
+  const { setShowTransactionForm, transactionType } = useContext(TransactionFormContext);
 
   const [categories, setCategories] = useState([]);
 
@@ -29,8 +29,14 @@ export const TransactionForm = () => {
   }, []);
 
   const onSubmit = (values) => {
+
+    if(transactionType === "Expense") {
+      values.amount = -1 * values.amount;
+    }
+
     // Save transaction
     dispatch( startSetTransaction(values) );
+
     // Close the form
     setShowTransactionForm(false);
   }
@@ -40,7 +46,7 @@ export const TransactionForm = () => {
 
       <div className="bg-primary flex items-center justify-between p-2">
 
-        <h2 className="text-lg font-black">New Transaction</h2>
+        <h2 className="text-lg font-black text-white">New {transactionType}</h2>
 
         <button
           onClick={() => setShowTransactionForm(false)}
