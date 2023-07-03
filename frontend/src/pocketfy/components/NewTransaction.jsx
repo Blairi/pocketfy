@@ -3,18 +3,23 @@ import { TransactionFormContext } from "../contexts/TransactionFormContext"
 
 export const NewTransaction = () => {
 
-  const { setShowTransactionForm } = useContext(TransactionFormContext);
+  const { setShowTransactionForm, setTransactionType } = useContext(TransactionFormContext);
+
+  const handleClick = (type) => {
+    setTransactionType(type);
+    setShowTransactionForm(true);
+  }
 
   return (
     <div className="flex justify-between gap-5">
 
       <button 
-        onClick={() => setShowTransactionForm(true)} 
+        onClick={() => handleClick("Expense")} 
         className="btn btn-error flex-grow text-lg"
       >-</button>
 
       <button 
-        onClick={() => setShowTransactionForm(true)} 
+        onClick={() => handleClick("Income")} 
         className="btn btn-success flex-grow text-lg"
       >+</button>
 
