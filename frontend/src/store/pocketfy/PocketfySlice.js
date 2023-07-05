@@ -6,6 +6,7 @@ export const pocketfySlice = createSlice({
     accounts: [],
     accountSelected: null,
     transactions: [],
+    activeTransactions : [],
     isLoading: false,
   },
   reducers: {
@@ -21,6 +22,10 @@ export const pocketfySlice = createSlice({
     setTransactions: (state, action) => {
       state.transactions = action.payload;
     },
+    setActiveTransactionsByDateFilter: (state, action) => {
+      state.activeTransactions = action.payload;
+      state.isLoading = false;
+    },
     setTransaction: (state, action) => {
       state.transactions.push( action.payload );
       state.isLoading = false;
@@ -34,5 +39,6 @@ export const {
   setIsLoading,
   setSelectedAccount, 
   setTransactions, 
+  setActiveTransactionsByDateFilter, 
   setTransaction 
 } = pocketfySlice.actions;
