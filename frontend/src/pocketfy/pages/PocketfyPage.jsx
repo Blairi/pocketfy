@@ -4,7 +4,8 @@ import { FilterContext } from "../contexts/FilterContext";
 import { TransactionFormProvider } from "../contexts/TransactionFormProvider"
 import { PocketfyLayout } from "../layout/PocketfyLayout"
 import { useDispatch } from 'react-redux';
-import { startLoadingAccounts, startLoadingTransactions, startSelectAccount } from "../../store/pocketfy/thunks";
+import { startLoadingAccounts, startLoadingTransactions, startSelectAccount, startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
+import dayjs from "dayjs";
 
 export const PocketfyPage = () => {
 
@@ -16,6 +17,7 @@ export const PocketfyPage = () => {
     dispatch( startLoadingAccounts() );
     dispatch( startSelectAccount(-1) );
     dispatch( startLoadingTransactions() );
+    dispatch( startSetActiveTransactionsByDateFilter(dayjs(), "day") );
   }, [])
 
   return (
