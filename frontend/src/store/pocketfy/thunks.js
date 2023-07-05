@@ -1,5 +1,6 @@
+import dayjs from "dayjs";
 import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions } from "./PocketfySlice";
+import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions, setActiveTransactionsByDateFilter } from "./PocketfySlice";
 
 export const startLoadingAccounts = () => {
   return async(dispatch) => {
@@ -42,5 +43,23 @@ export const startLoadingTransactions = () => {
     transactions = loadLocalTransactions();
 
     dispatch( setTransactions(transactions) );
+  }
+}
+
+export const startSetActiveTransactionsByDateFilter = (date, filter) => {
+  return async(dispatch, getState) => {
+
+    dispatch( setIsLoading() );
+
+    const { transactions } = getState().pocketfy;
+
+    const transactionsFiltered = transactions.filter(transaction => {
+      if ( dayjs(transaction.date).isSame(date, filter) ) {
+        return transaction;
+      }
+    });
+
+    dispatch( setActiveTransactionsByDateFilter( transactionsFiltered ) );
+
   }
 }
