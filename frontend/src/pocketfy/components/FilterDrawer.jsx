@@ -2,10 +2,17 @@ import { useContext, useState } from "react";
 import { FilterContext } from "../contexts/FilterContext";
 import { AccountSelector } from "./AccountSelector";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
 
 export const FilterDrawer = () => {
 
-  const { setShowFilter, filterSelected, setFilterSelected, setDate } = useContext(FilterContext);
+  const { 
+    setShowFilter, 
+    filterSelected, setFilterSelected, 
+    setDate, date } = useContext(FilterContext);
+
+  const dispacth = useDispatch();
 
   const [isHiding, setIsHiding] = useState(false);
 
@@ -38,6 +45,8 @@ export const FilterDrawer = () => {
 
     // Fade out animation
     setIsHiding(true);
+
+    dispacth( startSetActiveTransactionsByDateFilter(date, filter) );
       
     setTimeout(() => {
       setShowFilter(false);
