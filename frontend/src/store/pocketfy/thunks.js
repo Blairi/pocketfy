@@ -46,7 +46,7 @@ export const startLoadingTransactions = () => {
   }
 }
 
-export const startSetActiveTransactionsByDateFilter = (date, filter) => {
+export const startSetActiveTransactionsByDateFilter = (date = dayjs(), filter) => {
   return async(dispatch, getState) => {
 
     dispatch( setIsLoading() );
@@ -59,7 +59,11 @@ export const startSetActiveTransactionsByDateFilter = (date, filter) => {
       }
     });
 
-    dispatch( setActiveTransactionsByDateFilter( transactionsFiltered ) );
+    dispatch( setActiveTransactionsByDateFilter({ 
+      transactionsFiltered, 
+      filter, 
+      date: date.startOf(filter).toString(),
+    }));
 
   }
 }
