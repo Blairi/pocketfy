@@ -5,6 +5,8 @@ export const pocketfySlice = createSlice({
   initialState: {
     accounts: [],
     accountSelected: null,
+    dateFilterSelected: null,
+    activeDate: null,
     transactions: [],
     activeTransactions : [],
     isLoading: false,
@@ -23,7 +25,9 @@ export const pocketfySlice = createSlice({
       state.transactions = action.payload;
     },
     setActiveTransactionsByDateFilter: (state, action) => {
-      state.activeTransactions = action.payload;
+      state.activeDate = action.payload.date;
+      state.dateFilterSelected = action.payload.filter;
+      state.activeTransactions = action.payload.transactionsFiltered;
       state.isLoading = false;
     },
     setTransaction: (state, action) => {
