@@ -31,7 +31,9 @@ export const FilterDrawer = () => {
   const handleToday = () => {
     setFilterSelected("day");
     setDate(dayjs());
-    
+
+    dispacth( startSetActiveTransactionsByDateFilter(date, "day") );
+
     // Fade out animation
     setIsHiding(true);
       
