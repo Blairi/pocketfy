@@ -1,51 +1,44 @@
-import { useContext, useState } from "react"
-import { FilterContext } from "../contexts/FilterContext";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
 
 export const DateSelection = () => {
 
-  const { date, setDate, filterSelected } = useContext(FilterContext);
+  const { dateFilterSelected, activeDate } = useSelector(state => state.pocketfy);
+  const dispatch = useDispatch();
 
-  const [unit, setUnit] = useState(filterSelected);
+  const manipulateDate = (add = true) => {
+    let date = dayjs(activeDate);
 
-  useEffect(() => {
+    if(add)
+      date = date.add(1, dateFilterSelected);
+    else
+      date = date.subtract(1, dateFilterSelected);
 
-    if(filterSelected === "day") {
-      setUnit("day");
-    }
-
-    if(filterSelected === "week") {
-      setDate(date.startOf("week"));
-      setUnit("week");
-    }
-
-    if(filterSelected === "month") {
-      setDate(date.startOf("month"));
-      setUnit("month");
-    }
-
-  }, [filterSelected]);
+    dispatch( startSetActiveTransactionsByDateFilter(date, dateFilterSelected) );
+  }
 
   return (
     <nav className="flex justify-between items-center">
 
       <button 
         className="btn btn-primary" 
-        onClick={() => setDate(date.subtract(1, unit))}
+        onClick={() => manipulateDate(false)}
       >&#10094;</button>
 
       <span className="font-black">
         {
-          filterSelected === "day" ? date.format("DD/MMM/YYYY") :
-          filterSelected === "week" ? ( date.format("DD/MMM/YYYY") + " - " + date.endOf("week").format("DD/MMM/YYYY") ) :
-          filterSelected === "month" ? date.format("MMMM/YYYY") : ""
+          dateFilterSelected === "day" ? dayjs(activeDate).format("DD/MMM/YYYY") :
+          dateFilterSelected === "week" ? ( dayjs(activeDate).format("DD/MMM/YYYY") + " - " + dayjs(activeDate).endOf("week").format("DD/MMM/YYYY") ) :
+          dateFilterSelected === "month" ? dayjs(activeDate).format("MMMM/YYYY") : ""
         }
       </span>
 
       <button 
         className="btn btn-primary" 
-        onClick={() => setDate(date.add(1, unit))}
+        onClick={() => manipulateDate(true)}
       >&#10095;</button>
+      
     </nav>
   )
 }
