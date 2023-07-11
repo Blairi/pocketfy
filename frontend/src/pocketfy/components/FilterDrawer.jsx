@@ -1,16 +1,15 @@
 import { useContext, useState } from "react";
 import { FilterContext } from "../contexts/FilterContext";
 import { AccountSelector } from "./AccountSelector";
-import dayjs from "dayjs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
+import dayjs from "dayjs";
 
 export const FilterDrawer = () => {
 
-  const { 
-    setShowFilter, 
-    filterSelected, setFilterSelected, 
-    setDate, date } = useContext(FilterContext);
+  const { setShowFilter} = useContext(FilterContext);
+
+  const { dateFilterSelected, activeDate } = useSelector(state => state.pocketfy);
 
   const dispacth = useDispatch();
 
@@ -29,10 +28,8 @@ export const FilterDrawer = () => {
   };
 
   const handleToday = () => {
-    setFilterSelected("day");
-    setDate(dayjs());
 
-    dispacth( startSetActiveTransactionsByDateFilter(date, "day") );
+    dispacth( startSetActiveTransactionsByDateFilter(dayjs(), "day") );
 
     // Fade out animation
     setIsHiding(true);
@@ -43,12 +40,11 @@ export const FilterDrawer = () => {
   }
 
   const setFilter = (filter) => {
-    setFilterSelected(filter);
 
     // Fade out animation
     setIsHiding(true);
 
-    dispacth( startSetActiveTransactionsByDateFilter(date, filter) );
+    dispacth( startSetActiveTransactionsByDateFilter(dayjs(activeDate), filter) );
       
     setTimeout(() => {
       setShowFilter(false);
@@ -57,7 +53,7 @@ export const FilterDrawer = () => {
 
   return (
     <div
-      onClick={handleContainerClick}
+      onClick={ handleContainerClick }
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
       className={`h-screen w-screen fixed top-0 left-0 z-10 animate__animated
         ${isHiding ? "animate__fadeOut" : "animate__fadeIn"}`
@@ -77,7 +73,7 @@ export const FilterDrawer = () => {
 
           <label 
             className={`btn btn-outline btn-secondary 
-              ${filterSelected === "day" ? "btn-active" : ""}`
+              ${dateFilterSelected === "day" ? "btn-active" : ""}`
             } 
             htmlFor="day"
           >Day</label>
@@ -91,7 +87,7 @@ export const FilterDrawer = () => {
 
           <label 
             className={`btn btn-outline btn-secondary 
-              ${filterSelected === "week" ? "btn-active" : ""}`
+              ${dateFilterSelected === "week" ? "btn-active" : ""}`
             } 
             htmlFor="week"
           >Week</label>
@@ -105,7 +101,7 @@ export const FilterDrawer = () => {
 
           <label 
             className={`btn btn-outline btn-secondary 
-              ${filterSelected === "month" ? "btn-active" : ""}`
+              ${dateFilterSelected === "month" ? "btn-active" : ""}`
             } 
             htmlFor="month"
           >Month</label>
