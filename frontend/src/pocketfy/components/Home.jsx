@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export const Home = () => {
 
   const { showTransactionForm } = useContext(TransactionFormContext);
-  const { accountSelected } = useSelector(state => state.pocketfy);
+  const { accountSelected, activeTransactions } = useSelector(state => state.pocketfy);
 
   return (
     <>
@@ -28,6 +28,18 @@ export const Home = () => {
               </div>
 
               <PieChart />
+
+              <div className="">
+                {
+                  activeTransactions.map((transaction, key) => (
+                    <div key={ key }>
+                      {transaction.description}
+                      {transaction.category}
+                      {transaction.amount}
+                    </div>
+                  ))
+                }
+              </div>
 
               <NewTransaction />
             </div>
