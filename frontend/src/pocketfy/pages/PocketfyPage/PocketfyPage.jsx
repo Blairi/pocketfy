@@ -1,15 +1,6 @@
-import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import { startLoadingApp } from "../../../store/pocketfy/thunks";
 import { FilterDrawer, Home } from "./components";
 
 export const PocketfyPage = () => {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch( startLoadingApp() );
-  }, [])
 
   return (
     <div className="drawer">
