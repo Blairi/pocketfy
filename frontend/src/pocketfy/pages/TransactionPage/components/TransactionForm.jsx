@@ -95,19 +95,14 @@ export const TransactionForm = ({ type }) => {
                 </label>
                 <div className="flex gap-2 flex-wrap">
                   {categories.map((category, key) => (
-                    <div 
+                    <label 
                       key={ key }
-                      className={`w-16 h-16 p-1 border-2 rounded-md hover:bg-primary transition ${category.id == values.category ? "bg-primary-focus border-primary" : "border-neutral"}`
+                      htmlFor={`category-${category.id}`}
+                      className={`flex flex-col justify-center items-center h-16 w-16 rounded-md hover:bg-primary cursor-pointer transition ${category.id == values.category ? "text-white bg-primary-focus" : "bg-neutral"}`
                       }
                     >
-                      <label 
-                        htmlFor={`category-${category.id}`}
-                        className={`flex flex-col justify-center h-full items-center ${category.id == values.category ? "text-white" : ""}`
-                        }
-                      >
-                        <DepositsIcon />
-                        {category.name}
-                      </label>
+                      <DepositsIcon />
+                      {category.name}
                       <Field
                         type="radio"
                         name="category"
@@ -115,7 +110,7 @@ export const TransactionForm = ({ type }) => {
                         value={parseInt(category.id)}
                         id={`category-${category.id}`}
                       />
-                    </div>
+                    </label>
                   ))}
                 </div>
               </div>
@@ -129,24 +124,20 @@ export const TransactionForm = ({ type }) => {
                 <div className="flex flex-wrap gap-2">
                   {
                     accounts.map((account, key) => (
-                      <div 
-                        key={ key }
-                        className={`rounded-md p-2 hover:bg-primary transition ${account.id == values.account ? "bg-primary-focus" : "bg-neutral"}`}
-                      >
                         <label 
+                          key={ key }
                           htmlFor={`account-${account.id}`}
-                          className={`${account.id == values.account ? "text-white" : ""}`}
+                          className={`p-2 rounded-md hover:bg-primary cursor-pointer transition ${account.id == values.account ? "text-white bg-primary-focus" : "bg-neutral"}`}
                         >
                           {account.name}
+                          <Field
+                            type="radio"
+                            name="account"
+                            className="hidden"
+                            value={account.id}
+                            id={`account-${account.id}`}
+                          />
                         </label>
-                        <Field
-                          type="radio"
-                          name="account"
-                          className="hidden"
-                          value={account.id}
-                          id={`account-${account.id}`}
-                        />
-                      </div>
                     ))
                   }
                 </div>
