@@ -9,11 +9,15 @@ export const pocketfySlice = createSlice({
     activeDate: null,
     transactions: [],
     activeTransactions : [],
+    categories: [],
     isLoading: false,
   },
   reducers: {
     setIsLoading: (state) => {
       state.isLoading = true;
+    },
+    setCategories: (state, action) => {
+      state.categories = action.payload;
     },
     setAccounts: (state, action ) => {
       state.accounts = action.payload;
@@ -40,6 +44,7 @@ export const pocketfySlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { 
   setAccounts, 
+  setCategories,
   setIsLoading,
   setSelectedAccount, 
   setTransactions, 
