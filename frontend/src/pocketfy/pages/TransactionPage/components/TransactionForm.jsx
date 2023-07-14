@@ -1,44 +1,30 @@
-import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
-import { TransactionFormContext } from "../contexts/TransactionFormContext";
-import { loadCategories } from "../../service/online/loadCategories";
-import { startSetTransaction } from "../../store/pocketfy/thunks";
-import { Loading } from "../ui";
+import { startSetTransaction } from "../../../../store/pocketfy/thunks";
 
 const DepositsIcon = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
-
 }
 
-export const TransactionForm = () => {
+export const TransactionForm = ({ type }) => {
 
-  const { setShowTransactionForm, transactionType } = useContext(TransactionFormContext);
-
-  const [categories, setCategories] = useState([]);
-
-  const { accounts, accountSelected, isLoading } = useSelector(state => state.pocketfy);
+  const { accounts, accountSelected, categories } = useSelector(state => state.pocketfy);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // TODO: Use thunks instaed
-    setCategories( loadCategories() );
-  }, []);
+  const navigate = useNavigate();
 
   const onSubmit = (values) => {
-
-    if(transactionType === "Expense") {
+    if(type === "expense") {
       values.amount = -1 * values.amount;
     }
-
     // Save transaction
     dispatch( startSetTransaction(values) );
 
-    // Close the form
-    setShowTransactionForm(false);
+    navigate(-1);
   }
 
   return (
@@ -46,10 +32,10 @@ export const TransactionForm = () => {
 
       <div className="bg-primary flex items-center justify-between p-2">
 
-        <h2 className="text-lg font-black text-white">New {transactionType}</h2>
+        <h2 className="text-lg font-black text-white">New {type}</h2>
 
         <button
-          onClick={() => setShowTransactionForm(false)}
+          onClick={ () => navigate(-1) }
           className="btn btn-square btn-outline ml-auto"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -188,8 +174,6 @@ export const TransactionForm = () => {
           </Form>
         )}
       </Formik>
-
-      { isLoading && <Loading /> }
 
     </div>
   )

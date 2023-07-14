@@ -1,5 +1,6 @@
 
 export const loadCategories = () => {
-  const categories = [{id:1 , name: "Deposits"}, {id: 2, name: "Salary"}, {id: 3, name: "Savings"}];
+  // TODO: fecth categories from server
+  const categories = [{id:1 , name: "deposits"}, {id: 2, name: "salary"}, {id: 3, name: "savings"}];
   return categories;
 }

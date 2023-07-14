@@ -1,6 +1,7 @@
-import dayjs from "dayjs";
+import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions, setActiveTransactionsByDateFilter, setCategories } from "./PocketfySlice";
 import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions, setActiveTransactionsByDateFilter } from "./PocketfySlice";
+import { loadCategories } from "../../service/online";
+import dayjs from "dayjs";
 
 export const startLoadingApp = () => {
   return async(dispatch) => {
@@ -8,6 +9,14 @@ export const startLoadingApp = () => {
     dispatch( startSelectAccount(-1) ); // -1: All accounts
     dispatch( startLoadingTransactions() );
     dispatch( startSetActiveTransactionsByDateFilter(dayjs(), "day") );
+    dispatch( startLoadingCategories() );
+  }
+}
+
+export const startLoadingCategories = () => {
+  return async(dispatch) => {
+    const categories = loadCategories();
+    dispatch( setCategories(categories) );
   }
 }
 
