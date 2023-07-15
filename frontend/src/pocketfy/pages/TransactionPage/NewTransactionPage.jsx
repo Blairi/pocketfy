@@ -15,7 +15,7 @@ export const NewTransactionPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="py-5 min-h-screen w-[90%] max-w-[1280px] mx-auto">
       <TransactionForm type={ type }/>
     </div>
   )

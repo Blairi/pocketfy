@@ -43,22 +43,34 @@ export const startSelectAccount = (id) => {
 }
 
 export const startSetTransaction = (transaction) => {
-  return async(dispatch) => {
+  return async(dispatch, getState) => {
 
     dispatch( setIsLoading() );
+
+    const { categories, accounts, activeDate, dateFilterSelected } = getState().pocketfy;
+
+    transaction.category = categories.find((cat) => cat.id == transaction.category);
+    transaction.account = accounts.find((acc) => acc.id == transaction.account);
 
     saveLocalTransaction(transaction);
 
     dispatch( setTransaction(transaction) );
+    dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
   }
 }
 
 export const startLoadingTransactions = () => {
-  return async(dispatch) => {
+  return async(dispatch, getState) => {
 
     let transactions = [];
 
     transactions = loadLocalTransactions();
+
+    transactions.forEach(transaction => {
+      const { categories, accounts } = getState().pocketfy;
+      transaction.category = categories.find((cat) => cat.id == transaction.category);
+      transaction.account = accounts.find((acc) => acc.id == transaction.account);
+    });
 
     dispatch( setTransactions(transactions) );
   }

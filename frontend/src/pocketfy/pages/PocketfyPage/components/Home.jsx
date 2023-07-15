@@ -14,7 +14,7 @@ export const Home = () => {
 
         <DateSelection />
 
-        <div>
+        <div className="text-center">
           <span className="text-xs">Account Selected</span>
           <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
         </div>

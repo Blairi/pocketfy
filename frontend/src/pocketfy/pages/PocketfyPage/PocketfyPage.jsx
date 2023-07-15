@@ -7,7 +7,7 @@ export const PocketfyPage = () => {
 
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
 
-      <div className="drawer-content">
+      <div className="drawer-content py-5 min-h-screen w-[90%] max-w-[1280px] mx-auto">
         {/* Page content here */}
         <Home />
       </div>
