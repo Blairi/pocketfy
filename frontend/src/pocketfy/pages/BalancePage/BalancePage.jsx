@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { BackButton } from "../../../components";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { DateSelection } from "../PocketfyPage/components/DateSelection";
+import { DateSelection } from "../../components";
 
 export const BalancePage = () => {
 
@@ -35,6 +35,8 @@ export const BalancePage = () => {
 
 
       <div className="animate__animated animate__fadeInUp space-y-5">
+
+        <DateSelection />
 
         <div className="text-center">
           <h1 className="text-lg font-black">Transactions by {dateFilterSelected}</h1>
