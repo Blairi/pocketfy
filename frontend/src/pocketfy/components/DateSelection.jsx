@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { startSetActiveTransactionsByDateFilter } from "../../../../store/pocketfy/thunks";
+import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
 
 export const DateSelection = () => {
 
