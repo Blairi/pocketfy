@@ -33,7 +33,6 @@ export const BalancePage = () => {
 
       <BackButton />
 
-
       <div className="animate__animated animate__fadeInUp space-y-5">
 
         <DateSelection />
@@ -44,6 +43,12 @@ export const BalancePage = () => {
 
         <div className="space-y-5">
           {
+            activeTransactions.length === 0 
+            ?
+              <div>
+                <p>Not have transaction in this date yet, create a new one!</p>
+              </div>
+            :
             Object.keys(transactionsSorted).map((date, i) => (
               <div
                 key={i}
