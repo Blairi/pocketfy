@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux"
 import { BackButton } from "../../../components";
 import { useEffect, useState } from "react";
+import { DateFilterSelection, DateSelection } from "../../components";
 import dayjs from "dayjs";
-import { DateSelection } from "../../components";
 
 export const BalancePage = () => {
 
@@ -20,7 +20,6 @@ export const BalancePage = () => {
       }
       transactionsSorted[transaction.date].push(transaction);
     });
-    console.log(transactions, transactionsSorted);
     return transactionsSorted;
   }
 
@@ -40,6 +39,8 @@ export const BalancePage = () => {
         <div className="text-center">
           <h1 className="text-lg font-black">Transactions by {dateFilterSelected}</h1>
         </div>
+
+        <DateFilterSelection />
 
         <div className="space-y-5">
           {
