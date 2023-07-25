@@ -46,7 +46,7 @@ export const BalancePage = () => {
           {
             activeTransactions.length === 0 
             ?
-              <div>
+              <div className="text-center">
                 <p>Not have transaction in this date yet, create a new one!</p>
               </div>
             :
