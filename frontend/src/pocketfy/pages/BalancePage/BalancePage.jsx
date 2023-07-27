@@ -80,7 +80,7 @@ export const BalancePage = () => {
                       >
                         <p className="text-center">Category</p>
                         <p>Account</p>
-                        <p className="text-right">Amount</p>
+                        <p className="text-right">{transaction.amount}</p>
                       </div>
                     ))
                   }
