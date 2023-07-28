@@ -78,8 +78,8 @@ export const BalancePage = () => {
                         key={j}
                         className="grid grid-cols-3"
                       >
-                        <p className="text-center">Category</p>
-                        <p>Account</p>
+                        <p className="text-center">{transaction.category.name}</p>
+                        <p>{transaction.account.name}</p>
                         <p className="text-right">{transaction.amount}</p>
                       </div>
                     ))
