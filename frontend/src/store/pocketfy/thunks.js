@@ -49,10 +49,10 @@ export const startSetTransaction = (transaction) => {
 
     const { categories, accounts, activeDate, dateFilterSelected } = getState().pocketfy;
 
+    saveLocalTransaction(transaction);
+
     transaction.category = categories.find((cat) => cat.id == transaction.category);
     transaction.account = accounts.find((acc) => acc.id == transaction.account);
-
-    saveLocalTransaction(transaction);
 
     dispatch( setTransaction(transaction) );
     dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
