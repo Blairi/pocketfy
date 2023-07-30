@@ -16,3 +16,14 @@ input[type=number] {
 canvas{
   width: 100%!important;
 }
+
+/* Animatecss delay */
+.day-filter {
+  --animate-duration: 1s;
+}
+.week-filter {
+  --animate-duration: 1.4s;
+}
+.month-filter {
+  --animate-duration: 1.6s;
+}

@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom"
 import { startLoadingApp } from "../../store/pocketfy/thunks"
 import { PocketfyPage } from "../pages/PocketfyPage"
 import { NewTransactionPage } from "../pages/TransactionPage"
+import { BalancePage } from "../pages/BalancePage/BalancePage"
 
 export const PocketfyRoutes = () => {
 
@@ -17,6 +18,7 @@ export const PocketfyRoutes = () => {
     <Routes>
       <Route path="/home" element={<PocketfyPage />} />
       <Route path="/new-transaction/:type" element={<NewTransactionPage />} />
+      <Route path="/balance" element={<BalancePage />} />
     </Routes>
   )
 }

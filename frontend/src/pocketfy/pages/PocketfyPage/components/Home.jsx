@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux"
-import { DateSelection, NewTransaction, PieChart, TopBar } from "./"
+import { NavButton } from "../../../../components";
+import { DateSelection } from "../../../components";
+import { NewTransaction, PieChart, TopBar } from "./"
 
 export const Home = () => {
 
@@ -20,6 +22,11 @@ export const Home = () => {
         </div>
 
         <PieChart />
+
+        <NavButton 
+          path="/balance"
+          text="Balance"
+        />
 
         <NewTransaction />
 
