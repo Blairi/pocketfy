@@ -1,6 +1,6 @@
 import { AccountSelector } from "./";
 import { useDispatch, useSelector } from "react-redux";
-import { startSetActiveTransactionsByDateFilter } from "../../../../store/pocketfy/thunks";
+import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
 import dayjs from "dayjs";
 
 export const FilterDrawer = () => {
