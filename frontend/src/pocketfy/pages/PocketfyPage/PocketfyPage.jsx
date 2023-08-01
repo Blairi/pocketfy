@@ -1,22 +1,10 @@
-import { FilterDrawer, Home } from "./components";
+import { PocketfyLayout } from "../../layout/PocketfyLayout";
+import { Home } from "./components";
 
 export const PocketfyPage = () => {
-
   return (
-    <div className="drawer">
-
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-
-      <div className="drawer-content py-5 min-h-screen w-[90%] max-w-[1280px] mx-auto">
-        {/* Page content here */}
-        <Home />
-      </div>
-
-      <div className="drawer-side">
-        <label htmlFor="my-drawer" className="drawer-overlay"></label>
-        {/* Drawer content */}
-        <FilterDrawer />
-      </div>
-    </div>
+    <PocketfyLayout>
+      <Home />
+    </PocketfyLayout>
   )
 }
