@@ -14,7 +14,7 @@ export const PocketfyLayout = ({children}) => {
 
         <DateSelection />
 
-        <main className="animate__animated animate__fadeInUp h-[70vh] overflow-scroll">
+        <main className="animate__animated animate__fadeInUp h-[70vh] overflow-y-auto">
           {children}
         </main>
 
