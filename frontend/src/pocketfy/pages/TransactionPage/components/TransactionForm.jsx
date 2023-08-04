@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
 import { startSetTransaction } from "../../../../store/pocketfy/thunks";
+import { InputErrorMessage } from "../../../../components/form";
+import dayjs from "dayjs";
 
 const DepositsIcon = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -22,9 +24,9 @@ export const TransactionForm = ({ type }) => {
       values.amount = -1 * values.amount;
     }
     // Save transaction
-    // dispatch( startSetTransaction(values) );
+    dispatch( startSetTransaction(values) );
 
-    // navigate(-1);
+    navigate(-1);
   }
 
   return (
@@ -55,7 +57,7 @@ export const TransactionForm = ({ type }) => {
         validate={(values) => {
           let errors = {};
           if (values.amount <= 0 || values.amount > 100000) {
-            errors.amount = "Amount should between 0 and 100000";
+            errors.amount = "The Amount should be between 0 and 100000";
           }
           if (values.category == '' || values.category === undefined) {
             errors.category = "Choose a category";
@@ -63,10 +65,16 @@ export const TransactionForm = ({ type }) => {
           if (values.account == '' || values.account === undefined) {
             errors.account = "Choose a account";
           }
+          if (!dayjs(values.date).isValid()) {
+            errors.date = "Choose a valid date";
+          }
+          if (values.description.length > 100) {
+            errors.description = "The Description should be less than 100 characters";
+          }
           return errors;
         }}
       >
-        {({ touched, values, errors }) => (
+        {({ touched, values, errors, isValid, dirty }) => (
           <Form>
             <div className="px-3 py-5 grid place-items-center space-y-5">
 
@@ -86,8 +94,12 @@ export const TransactionForm = ({ type }) => {
                     placeholder="0.00"
                     name="amount"
                   />
-                  {touched.amount && errors.amount && <div>{errors.amount}</div>}
                 </div>
+                {touched.amount && errors.amount && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.amount}/>
+                  </div>
+                }
               </div>
 
               <div className="form-control w-full max-w-xs">
@@ -99,8 +111,13 @@ export const TransactionForm = ({ type }) => {
                   as="textarea"
                   rows="4"
                   name="description"
-                  className="textarea textarea-bordered resize-none"
+                  className={`textarea textarea-bordered resize-none ${touched.description && errors.description ? "textarea-error" : ""}`}
                 />
+                {touched.description && errors.description && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.description}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
@@ -127,7 +144,11 @@ export const TransactionForm = ({ type }) => {
                     </label>
                   ))}
                 </div>
-                {touched.category && errors.category && <div>{errors.category}</div>}
+                {touched.category && errors.category && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.category}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
@@ -156,7 +177,11 @@ export const TransactionForm = ({ type }) => {
                     ))
                   }
                 </div>
-                {touched.account && errors.account && <div>{errors.account}</div>}
+                {touched.account && errors.account && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.account}/>
+                  </div>
+                }
 
               </div>
 
@@ -171,10 +196,18 @@ export const TransactionForm = ({ type }) => {
                     name="date"
                   />
                 </div>
+                {touched.date && errors.date && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.date}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
-                <button className="btn btn-primary w-full" type="submit">Save</button>
+                <button 
+                  className={`btn btn-primary w-full ${!isValid ? "btn-disabled" : ""}`}
+                  type="submit"
+                >Save</button>
               </div>
 
             </div>
