@@ -22,9 +22,9 @@ export const TransactionForm = ({ type }) => {
       values.amount = -1 * values.amount;
     }
     // Save transaction
-    dispatch( startSetTransaction(values) );
+    // dispatch( startSetTransaction(values) );
 
-    navigate(-1);
+    // navigate(-1);
   }
 
   return (
@@ -52,8 +52,21 @@ export const TransactionForm = ({ type }) => {
           account: accountSelected?.id,
           date: new Date().toISOString().slice(0, 10),
         }}
+        validate={(values) => {
+          let errors = {};
+          if (values.amount <= 0 || values.amount > 100000) {
+            errors.amount = "Amount should between 0 and 100000";
+          }
+          if (values.category == '' || values.category === undefined) {
+            errors.category = "Choose a category";
+          }
+          if (values.account == '' || values.account === undefined) {
+            errors.account = "Choose a account";
+          }
+          return errors;
+        }}
       >
-        {({ values }) => (
+        {({ touched, values, errors }) => (
           <Form>
             <div className="px-3 py-5 grid place-items-center space-y-5">
 
@@ -73,6 +86,7 @@ export const TransactionForm = ({ type }) => {
                     placeholder="0.00"
                     name="amount"
                   />
+                  {touched.amount && errors.amount && <div>{errors.amount}</div>}
                 </div>
               </div>
 
@@ -113,6 +127,7 @@ export const TransactionForm = ({ type }) => {
                     </label>
                   ))}
                 </div>
+                {touched.category && errors.category && <div>{errors.category}</div>}
               </div>
 
               <div className="w-full max-w-xs">
@@ -134,13 +149,14 @@ export const TransactionForm = ({ type }) => {
                             type="radio"
                             name="account"
                             className="hidden"
-                            value={account.id}
+                            value={parseInt(account.id)}
                             id={`account-${account.id}`}
                           />
                         </label>
                     ))
                   }
                 </div>
+                {touched.account && errors.account && <div>{errors.account}</div>}
 
               </div>
 
