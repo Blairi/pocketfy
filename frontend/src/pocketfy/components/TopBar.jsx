@@ -1,4 +1,4 @@
-import { Brand } from "../../../../components"
+import { Brand } from "../../components"
 
 export const TopBar = () => {
 

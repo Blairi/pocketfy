@@ -34,18 +34,23 @@ export const TotalBalance = () => {
         </p>
       </header>
       <div className="grid grid-cols-3">
-        <div className="flex flex-col items-center">
-          <p className="text-red-500">Expenses</p>
-          <span>$ {balance.expenses}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-green-500">Incomes</p>
-          <span>$ {balance.incomes}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-blue-500">Total</p>
-          <span>$ {balance.total}</span>
-        </div>
+        {
+          activeTransactions.length > 0
+          && <>
+            <div className="flex flex-col items-center">
+              <p className="text-red-500">Expenses</p>
+              <span>$ {balance.expenses}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-green-500">Incomes</p>
+              <span>$ {balance.incomes}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-blue-500">Total</p>
+              <span>$ {balance.total}</span>
+            </div>
+          </>
+        }
       </div>
     </div>
   )

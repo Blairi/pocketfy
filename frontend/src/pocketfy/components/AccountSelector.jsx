@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { startSelectAccount } from "../../../../store/pocketfy/thunks";
+import { startSelectAccount } from "../../store/pocketfy/thunks";
 
 export const AccountSelector = () => {
 

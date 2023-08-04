@@ -1,37 +1,30 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import { NavButton } from "../../../../components";
-import { DateSelection } from "../../../components";
-import { NewTransaction, PieChart, TopBar } from "./"
+import { PieChart } from "./";
 
 export const Home = () => {
 
   const { accountSelected } = useSelector(state => state.pocketfy);
 
   return (
-    <main className="space-y-10 mt-5">
 
-      <div className="animate__animated animate__fadeInUp space-y-10">
+    <div className="space-y-2">
 
-        <TopBar />
+      <div className="text-center">
+        <span className="text-xs">Account Selected</span>
+        <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
+      </div>
 
-        <DateSelection />
-
-        <div className="text-center">
-          <span className="text-xs">Account Selected</span>
-          <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
-        </div>
-
-        <PieChart />
-
-        <NavButton 
+      <div className="w-[80%] mx-auto space-y-2">
+        <NavButton
           path="/balance"
           text="Balance"
         />
 
-        <NewTransaction />
-
+        <PieChart />
       </div>
 
-    </main>
+    </div>
+
   )
 }
