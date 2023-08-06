@@ -74,7 +74,7 @@ export const TransactionForm = ({ type }) => {
           return errors;
         }}
       >
-        {({ touched, values, errors, isValid, dirty }) => (
+        {({ touched, values, errors, isValid }) => (
           <Form>
             <div className="px-3 py-5 grid place-items-center space-y-5">
 
