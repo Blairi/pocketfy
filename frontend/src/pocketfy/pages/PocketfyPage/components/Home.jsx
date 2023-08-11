@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import { NavButton } from "../../../../components";
 import { PieChart } from "./";
+import { usePocketfyStore } from "../../../../hooks";
 
 export const Home = () => {
 
-  const { accountSelected } = useSelector(state => state.pocketfy);
+  const { accountSelected } = usePocketfyStore();
 
   return (
 

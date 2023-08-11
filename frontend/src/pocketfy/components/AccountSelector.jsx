@@ -1,14 +1,11 @@
-import { useDispatch, useSelector } from "react-redux"
-import { startSelectAccount } from "../../store/pocketfy/thunks";
+import { usePocketfyStore } from "../../hooks/usePocketfyStore";
 
 export const AccountSelector = () => {
 
-  const { accounts, accountSelected } = useSelector(state => state.pocketfy);
-
-  const dispatch = useDispatch();
+  const { accounts, accountSelected, onStartSelectAccount } = usePocketfyStore();
 
   const selectAccount = (id) => {
-    dispatch( startSelectAccount(id) );
+    onStartSelectAccount(id);
   }
 
   return (

@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux"
 import { BackButton } from "../../../components";
 import { TotalBalance } from "../../components";
 import { TransactionList } from "./components";
 import { PocketfyLayout } from "../../layout/PocketfyLayout";
+import { usePocketfyStore } from "../../../hooks";
 
 export const BalancePage = () => {
 
-  const { activeTransactions } = useSelector(state => state.pocketfy);
+  const { activeTransactions } = usePocketfyStore();
 
   return (
     <PocketfyLayout>

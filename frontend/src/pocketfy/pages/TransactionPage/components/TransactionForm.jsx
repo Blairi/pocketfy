@@ -1,8 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
-import { startSetTransaction } from "../../../../store/pocketfy/thunks";
 import { InputErrorMessage } from "../../../../components/form";
+import { usePocketfyStore } from "../../../../hooks";
 import dayjs from "dayjs";
 
 const DepositsIcon = () => {
@@ -13,9 +12,7 @@ const DepositsIcon = () => {
 
 export const TransactionForm = ({ type }) => {
 
-  const { accounts, accountSelected, categories } = useSelector(state => state.pocketfy);
-
-  const dispatch = useDispatch();
+  const { accounts, accountSelected, categories, onStartSetTransaction } = usePocketfyStore();
 
   const navigate = useNavigate();
 
@@ -24,7 +21,7 @@ export const TransactionForm = ({ type }) => {
       values.amount = -1 * values.amount;
     }
     // Save transaction
-    dispatch( startSetTransaction(values) );
+    onStartSetTransaction(values);
 
     navigate(-1);
   }

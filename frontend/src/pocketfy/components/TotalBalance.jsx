@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { usePocketfyStore } from "../../hooks";
 
 export const TotalBalance = () => {
 
-  const { activeTransactions, dateFilterSelected } = useSelector(state => state.pocketfy);
+  const { activeTransactions, dateFilterSelected } = usePocketfyStore();
 
   const balance = useMemo(() => {
     return activeTransactions.reduce((balance, transaction) => {
