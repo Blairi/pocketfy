@@ -1,10 +1,10 @@
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { usePocketfyStore } from "../../../../hooks";
 import dayjs from "dayjs";
 
 export const TransactionList = () => {
 
-  const { activeTransactions } = useSelector(state => state.pocketfy);
+  const { activeTransactions } = usePocketfyStore();
 
   const transactionsSorted = useMemo(() => {
 
