@@ -7,18 +7,28 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const PieChart = () => {
 
-  const { categories } = usePocketfyStore();
+  const { activeTransactions } = usePocketfyStore();
 
-  const categoriesName = useMemo(() => (
-    categories.map((category) => category.name)
-  ), [categories]);
+  const categoriesDict = useMemo(() => {
+    return activeTransactions.reduce((dict, transaction) => {
+
+      const { category, amount } = transaction;
+
+      if (amount < 0) {
+        dict[category.name] = dict[category.name] || 0;
+        dict[category.name] += amount;
+      }
+
+      return dict;
+    }, {});
+  }, [activeTransactions]);
 
   const data = {
-    labels: categoriesName,
+    labels: Object.keys(categoriesDict),
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: Object.values(categoriesDict),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
