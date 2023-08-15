@@ -9,7 +9,12 @@ export const pocketfySlice = createSlice({
     activeDate: null,
     transactions: [],
     activeTransactions : [],
-    categories: [],
+    categories: {
+      expenses: [
+      ],
+      incomes: [
+      ],
+    },
     isLoading: false,
   },
   reducers: {
