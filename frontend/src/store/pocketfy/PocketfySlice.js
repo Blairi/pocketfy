@@ -22,7 +22,8 @@ export const pocketfySlice = createSlice({
       state.isLoading = true;
     },
     setCategories: (state, action) => {
-      state.categories = action.payload;
+      state.categories.expenses = action.payload.expenses;
+      state.categories.incomes = action.payload.incomes;
     },
     setAccounts: (state, action ) => {
       state.accounts = action.payload;
