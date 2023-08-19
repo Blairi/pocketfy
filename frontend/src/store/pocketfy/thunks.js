@@ -1,6 +1,9 @@
-import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions, setActiveTransactionsByDateFilter, setCategories } from "./PocketfySlice";
+import { 
+  setAccounts, setIsLoading, setSelectedAccount, setTransaction, 
+  setTransactions, setActiveTransactionsByDateFilter, setCategories 
+} from "./PocketfySlice";
 import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { loadCategories } from "../../service/online";
+import { loadExpensesCategories, loadIncomesCategories } from "../../service/online";
 import dayjs from "dayjs";
 
 export const startLoadingApp = () => {
@@ -15,8 +18,10 @@ export const startLoadingApp = () => {
 
 export const startLoadingCategories = () => {
   return async(dispatch) => {
-    const categories = loadCategories();
-    dispatch( setCategories(categories) );
+    const expenses = await loadExpensesCategories();
+    const incomes = await loadIncomesCategories();
+
+    dispatch( setCategories({ expenses, incomes }) );
   }
 }
 
