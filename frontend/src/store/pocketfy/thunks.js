@@ -52,18 +52,20 @@ export const startSetTransaction = (transaction) => {
 
     dispatch( setIsLoading() );
 
-    const { categories, accounts, activeDate, dateFilterSelected } = getState().pocketfy;
+    const { activeDate, dateFilterSelected } = getState().pocketfy;
 
     saveLocalTransaction(transaction);
 
-    transaction.category = categories.find((cat) => cat.id == transaction.category);
-    transaction.account = accounts.find((acc) => acc.id == transaction.account);
-
     dispatch( setTransaction(transaction) );
-    dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
+
+    // Update active transactions if the date of the transaction is the same that the date filter selected
+    if (dayjs().isSame(transaction.date, dateFilterSelected)) {
+      dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
+    }
   }
 }
 
+// TODO: fix - load transactions
 export const startLoadingTransactions = () => {
   return async(dispatch, getState) => {
 
@@ -73,8 +75,8 @@ export const startLoadingTransactions = () => {
 
     transactions.forEach(transaction => {
       const { categories, accounts } = getState().pocketfy;
-      transaction.category = categories.find((cat) => cat.id == transaction.category);
-      transaction.account = accounts.find((acc) => acc.id == transaction.account);
+      // transaction.category = categories.find((cat) => cat.id == transaction.category);
+      // transaction.account = accounts.find((acc) => acc.id == transaction.account);
     });
 
     dispatch( setTransactions(transactions) );
