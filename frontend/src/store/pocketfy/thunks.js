@@ -65,19 +65,12 @@ export const startSetTransaction = (transaction) => {
   }
 }
 
-// TODO: fix - load transactions
 export const startLoadingTransactions = () => {
-  return async(dispatch, getState) => {
+  return async(dispatch) => {
 
     let transactions = [];
 
     transactions = loadLocalTransactions();
-
-    transactions.forEach(transaction => {
-      const { categories, accounts } = getState().pocketfy;
-      // transaction.category = categories.find((cat) => cat.id == transaction.category);
-      // transaction.account = accounts.find((acc) => acc.id == transaction.account);
-    });
 
     dispatch( setTransactions(transactions) );
   }
