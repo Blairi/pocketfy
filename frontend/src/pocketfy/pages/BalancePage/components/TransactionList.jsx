@@ -82,8 +82,8 @@ export const TransactionList = () => {
                     key={j}
                     className="grid grid-cols-3"
                   >
-                    <p className="text-center">{transaction.category.name}</p>
-                    <p>{transaction.account.name}</p>
+                    <p className="text-center">{transaction.category}</p>
+                    <p>{transaction.account}</p>
                     <p
                       className={`text-right ${transaction.amount < 0 ? "text-red-500" : "text-green-500"}`}
                     >$ {transaction.amount}</p>
