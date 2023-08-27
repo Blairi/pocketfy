@@ -1,5 +1,5 @@
+import { TransactionsPie } from "./";
 import { NavButton } from "../../../../components";
-import { PieChart } from "./";
 import { usePocketfyStore } from "../../../../hooks";
 
 export const Home = () => {
@@ -15,13 +15,15 @@ export const Home = () => {
         <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
       </div>
 
-      <div className="w-[80%] mx-auto space-y-2">
+      <div className="w-[80%] mx-auto space-y-5">
+
         <NavButton
           path="/balance"
           text="Balance"
         />
 
-        <PieChart />
+        <TransactionsPie />
+
       </div>
 
     </div>
