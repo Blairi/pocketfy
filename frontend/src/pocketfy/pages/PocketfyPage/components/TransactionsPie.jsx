@@ -68,13 +68,17 @@ export const TransactionsPie = () => {
   return (
     <div className="space-y-5">
 
-      <PieTransactionTypeSelector
-        setType={setType}
-        type={type}
-      />
 
       {
-        Boolean(data) && <PieChart data={data} />
+        Boolean(data) && (
+          <>
+            <PieTransactionTypeSelector
+              setType={setType}
+              type={type}
+            />
+            <PieChart data={data} />
+          </>
+        )
       }
 
     </div>
