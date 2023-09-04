@@ -1,5 +1,5 @@
 
-export const calculateCategoriesAmountsDict = ({ transactions }) => {
+export const calculateCategoriesAmountsDict = ( transactions, categories ) => {
   return transactions.reduce((dic, transaction) => {
 
     const { category, amount } = transaction;
