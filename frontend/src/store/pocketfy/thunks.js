@@ -18,6 +18,7 @@ export const startLoadingApp = () => {
 
 export const startLoadingCategories = () => {
   return async(dispatch) => {
+    dispatch( setIsLoading() );
     const expenses = await loadExpensesCategories();
     const incomes = await loadIncomesCategories();
 
