@@ -11,6 +11,7 @@ export const usePocketfyStore = () => {
     dateFilterSelected, 
     activeDate,
     activeTransactions,
+    isLoading,
   } = useSelector(state => state.pocketfy);
 
   const onStartLoadingApp = () => {
@@ -37,6 +38,7 @@ export const usePocketfyStore = () => {
     dateFilterSelected, 
     activeDate,
     activeTransactions,
+    isLoading,
 
     //Methods
     onStartLoadingApp,
