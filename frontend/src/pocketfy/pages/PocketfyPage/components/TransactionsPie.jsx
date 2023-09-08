@@ -22,6 +22,7 @@ export const TransactionsPie = () => {
             <PieTransactionTypeSelector
               setType={setType}
               type={type}
+              categoriesAmounts={dictCategoriesAmounts}
             />
             <PieChart categoriesAmounts={ dictCategoriesAmounts } type={type} />
             <Resume amounts={ dictCategoriesAmounts } type={type} />
