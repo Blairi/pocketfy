@@ -60,7 +60,7 @@ export const startSetTransaction = (transaction) => {
     dispatch( setTransaction(transaction) );
 
     // Update active transactions if the date of the transaction is the same that the date filter selected
-    if (dayjs().isSame(transaction.date, dateFilterSelected)) {
+    if (dayjs(activeDate).isSame(transaction.date, dateFilterSelected)) {
       dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
     }
   }
