@@ -1,6 +1,9 @@
-import { setAccounts, setIsLoading, setSelectedAccount, setTransaction, setTransactions, setActiveTransactionsByDateFilter, setCategories } from "./PocketfySlice";
+import { 
+  setAccounts, setIsLoading, setSelectedAccount, setTransaction, 
+  setTransactions, setActiveTransactionsByDateFilter, setCategories 
+} from "./PocketfySlice";
 import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { loadCategories } from "../../service/online";
+import { loadExpensesCategories, loadIncomesCategories } from "../../service/online";
 import dayjs from "dayjs";
 
 export const startLoadingApp = () => {
@@ -15,8 +18,11 @@ export const startLoadingApp = () => {
 
 export const startLoadingCategories = () => {
   return async(dispatch) => {
-    const categories = loadCategories();
-    dispatch( setCategories(categories) );
+    dispatch( setIsLoading() );
+    const expenses = await loadExpensesCategories();
+    const incomes = await loadIncomesCategories();
+
+    dispatch( setCategories({ expenses, incomes }) );
   }
 }
 
@@ -47,30 +53,25 @@ export const startSetTransaction = (transaction) => {
 
     dispatch( setIsLoading() );
 
-    const { categories, accounts, activeDate, dateFilterSelected } = getState().pocketfy;
+    const { activeDate, dateFilterSelected } = getState().pocketfy;
 
     saveLocalTransaction(transaction);
 
-    transaction.category = categories.find((cat) => cat.id == transaction.category);
-    transaction.account = accounts.find((acc) => acc.id == transaction.account);
-
     dispatch( setTransaction(transaction) );
-    dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
+
+    // Update active transactions if the date of the transaction is the same that the date filter selected
+    if (dayjs(activeDate).isSame(transaction.date, dateFilterSelected)) {
+      dispatch( startSetActiveTransactionsByDateFilter( dayjs(activeDate), dateFilterSelected) );
+    }
   }
 }
 
 export const startLoadingTransactions = () => {
-  return async(dispatch, getState) => {
+  return async(dispatch) => {
 
     let transactions = [];
 
     transactions = loadLocalTransactions();
-
-    transactions.forEach(transaction => {
-      const { categories, accounts } = getState().pocketfy;
-      transaction.category = categories.find((cat) => cat.id == transaction.category);
-      transaction.account = accounts.find((acc) => acc.id == transaction.account);
-    });
 
     dispatch( setTransactions(transactions) );
   }

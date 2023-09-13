@@ -9,7 +9,12 @@ export const pocketfySlice = createSlice({
     activeDate: null,
     transactions: [],
     activeTransactions : [],
-    categories: [],
+    categories: {
+      expenses: [
+      ],
+      incomes: [
+      ],
+    },
     isLoading: false,
   },
   reducers: {
@@ -17,7 +22,9 @@ export const pocketfySlice = createSlice({
       state.isLoading = true;
     },
     setCategories: (state, action) => {
-      state.categories = action.payload;
+      state.categories.expenses = action.payload.expenses;
+      state.categories.incomes = action.payload.incomes;
+      state.isLoading = false;
     },
     setAccounts: (state, action ) => {
       state.accounts = action.payload;

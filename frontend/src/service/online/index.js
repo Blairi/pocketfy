@@ -1,1 +1,2 @@
-export * from "./loadCategories";
+export * from "./loadIncomesCategories";
+export * from "./loadExpensesCategories";

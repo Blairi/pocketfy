@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { usePocketfyStore } from "../../../../hooks";
+import { TransactionListItem } from "./";
 import dayjs from "dayjs";
 
 export const TransactionList = () => {
@@ -78,16 +79,10 @@ export const TransactionList = () => {
             <div className="py-2 px-3">
               {
                 transactionsSorted[date].transactions.map((transaction, j) => (
-                  <div
-                    key={j}
-                    className="grid grid-cols-3"
-                  >
-                    <p className="text-center">{transaction.category.name}</p>
-                    <p>{transaction.account.name}</p>
-                    <p
-                      className={`text-right ${transaction.amount < 0 ? "text-red-500" : "text-green-500"}`}
-                    >$ {transaction.amount}</p>
-                  </div>
+                  <TransactionListItem 
+                    transaction={transaction} 
+                    key={j} 
+                  />
                 ))
               }
             </div>

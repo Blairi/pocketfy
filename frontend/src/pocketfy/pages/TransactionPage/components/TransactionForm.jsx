@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
 import { InputErrorMessage } from "../../../../components/form";
@@ -15,6 +16,13 @@ export const TransactionForm = ({ type }) => {
   const { accounts, accountSelected, categories, onStartSetTransaction } = usePocketfyStore();
 
   const navigate = useNavigate();
+
+  const categoriesType = useMemo(() => {
+    if (type === "expense") {
+      return categories.expenses;
+    }
+    return categories.incomes;
+  }, [categories]);
 
   const onSubmit = (values) => {
     if(type === "expense") {
@@ -122,7 +130,7 @@ export const TransactionForm = ({ type }) => {
                   <span className="label-text">Choose a category</span>
                 </label>
                 <div className="flex gap-2 flex-wrap">
-                  {categories.map((category, key) => (
+                  {categoriesType.map((category, key) => (
                     <label 
                       key={ key }
                       htmlFor={`category-${category.id}`}
