@@ -1,5 +1,5 @@
 
-export const loadExpensesCategories = async () => {
+export const loadExpensesCategories = () => {
   return [
     {
       id: 1,

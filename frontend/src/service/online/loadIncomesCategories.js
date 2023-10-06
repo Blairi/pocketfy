@@ -1,5 +1,5 @@
 
-export const loadIncomesCategories = async () => {
+export const loadIncomesCategories = () => {
   return [
     {
       id: 1,

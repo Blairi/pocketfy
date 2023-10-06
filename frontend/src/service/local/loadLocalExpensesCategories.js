@@ -17,7 +17,7 @@ const data = [
   },
 ];
 
-export const loadLocalExpensesCategories = async () => {
+export const loadLocalExpensesCategories = () => {
   let expenses = localStorage.getItem("expenses");
 
   if (!expenses) {
