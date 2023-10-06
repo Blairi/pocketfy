@@ -1,9 +1,8 @@
 import { 
   setAccounts, setIsLoading, setSelectedAccount, setTransaction, 
-  setTransactions, setActiveTransactionsByDateFilter, setCategories, setActiveTransactions, setActiveDate, setDateFilterSelected 
+  setTransactions, setCategories, setActiveTransactions, setActiveDate, setDateFilterSelected 
 } from "./PocketfySlice";
-import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { loadExpensesCategories, loadIncomesCategories } from "../../service/online";
+import { loadLocalAccounts, loadLocalExpensesCategories, loadLocalIncomesCategories, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
 import dayjs from "dayjs";
 
 export const startLoadingApp = () => {
@@ -41,8 +40,8 @@ export const startSetActiveTransactions = () => {
 
 export const startLoadingCategories = () => {
   return async(dispatch) => {
-    const expenses = loadExpensesCategories();
-    const incomes = loadIncomesCategories();
+    const expenses = loadLocalExpensesCategories();
+    const incomes = loadLocalIncomesCategories();
 
     dispatch( setCategories({ expenses, incomes }) );
   }
