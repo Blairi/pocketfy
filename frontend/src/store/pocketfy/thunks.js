@@ -58,18 +58,6 @@ export const startLoadingAccounts = () => {
   }
 }
 
-export const startSelectAccount = (id) => {
-  return async(dispatch, getState) => {
-
-    const { accounts } = getState().pocketfy;
-
-    const accountFound = accounts.find((account) => account.id === id);
-
-    dispatch( setSelectedAccount(accountFound) ); 
-    dispatch( startSetActiveTransactions() );
-  }
-}
-
 export const startSetTransaction = (transaction) => {
   return async(dispatch, getState) => {
 
