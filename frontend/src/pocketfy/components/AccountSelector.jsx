@@ -3,11 +3,7 @@ import { AccountItem } from "./AccountItem";
 
 export const AccountSelector = () => {
 
-  const { accounts, accountSelected, onStartSelectAccount } = usePocketfyStore();
-
-  const selectAccount = (id) => {
-    onStartSelectAccount(id);
-  }
+  const { accounts, accountSelected } = usePocketfyStore();
 
   return (
     <div className="dropdown flex">
