@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 export const DateSelection = () => {
 
-  const { dateFilterSelected, activeDate, onStartSetActiveTransactionsByDateFilter } = usePocketfyStore();
+  const { dateFilterSelected, activeDate, onStartSetActiveDate } = usePocketfyStore();
 
   const manipulateDate = (add = true) => {
     let date = dayjs(activeDate);
@@ -13,7 +13,7 @@ export const DateSelection = () => {
     else
       date = date.subtract(1, dateFilterSelected);
 
-    onStartSetActiveTransactionsByDateFilter(date, dateFilterSelected);
+    onStartSetActiveDate(date.toString());
   }
 
   return (

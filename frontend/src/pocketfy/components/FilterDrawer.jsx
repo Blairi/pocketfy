@@ -1,17 +1,16 @@
 import { AccountSelector } from "./";
 import { usePocketfyStore } from "../../hooks/usePocketfyStore";
-import dayjs from "dayjs";
 
 export const FilterDrawer = () => {
 
-  const { dateFilterSelected, activeDate, onStartSetActiveTransactionsByDateFilter } = usePocketfyStore();
+  const { dateFilterSelected, onStartSetDateFilter, onStartSetToday } = usePocketfyStore();
 
   const handleToday = () => {
-    onStartSetActiveTransactionsByDateFilter(dayjs(), "day");
+    onStartSetToday();
   }
 
   const setFilter = (filter) => {
-    onStartSetActiveTransactionsByDateFilter(dayjs(activeDate), filter);
+    onStartSetDateFilter(filter);
   }
 
   return (
