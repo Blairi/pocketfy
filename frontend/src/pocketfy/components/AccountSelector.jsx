@@ -1,4 +1,5 @@
 import { usePocketfyStore } from "../../hooks/usePocketfyStore";
+import { AccountItem } from "./AccountItem";
 
 export const AccountSelector = () => {
 
@@ -26,13 +27,10 @@ export const AccountSelector = () => {
 
             if(account.id !== accountSelected?.id){
               return(
-                <li key={key}>
-                  <button
-                    className="btn btn-outline btn-accent"
-                    onClick={ () => selectAccount(account.id) }
-                  >{account.name}
-                  </button>
-                </li>
+                <AccountItem 
+                  account={account} 
+                  key={key}
+                />
               )
             }
 
