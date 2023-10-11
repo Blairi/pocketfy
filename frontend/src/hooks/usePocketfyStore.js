@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { startLoadingApp, startSelectAccount, startSetActiveTransactionsByDateFilter, startSetTransaction } from "../store/pocketfy/thunks";
+import { startLoadingApp, startSetActiveTransactions, startSetTransaction } from "../store/pocketfy/thunks";
+import { setActiveDate, setDateFilterSelected, setSelectedAccount } from "../store/pocketfy/PocketfySlice";
+import dayjs from "dayjs";
 
 export const usePocketfyStore = () => {
   const dispatch = useDispatch();
@@ -22,12 +24,24 @@ export const usePocketfyStore = () => {
     dispatch( startSetTransaction(transaction) );
   }
 
-  const onStartSelectAccount = (id) => {
-    dispatch( startSelectAccount(id) );
+  const onStartSelectAccount = (account) => {
+    dispatch( setSelectedAccount(account) );
+    dispatch( startSetActiveTransactions() );
   }
 
-  const onStartSetActiveTransactionsByDateFilter = (date, filter) => {
-    dispatch( startSetActiveTransactionsByDateFilter(date, filter) );
+  const onStartSetToday = () => {
+    dispatch( setDateFilterSelected("day") );
+    dispatch( setActiveDate( dayjs().toString() ) );
+  }
+
+  const onStartSetDateFilter = (filter) => {
+    dispatch( setDateFilterSelected(filter) );
+    dispatch( startSetActiveTransactions() );
+  }
+
+  const onStartSetActiveDate = (date) => {
+    dispatch( setActiveDate(date) );
+    dispatch( startSetActiveTransactions() );
   }
 
   return {
@@ -44,6 +58,8 @@ export const usePocketfyStore = () => {
     onStartLoadingApp,
     onStartSetTransaction,
     onStartSelectAccount,
-    onStartSetActiveTransactionsByDateFilter,
+    onStartSetDateFilter,
+    onStartSetToday,
+    onStartSetActiveDate,
   }
 }

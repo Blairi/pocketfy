@@ -35,6 +35,15 @@ export const pocketfySlice = createSlice({
     setTransactions: (state, action) => {
       state.transactions = action.payload;
     },
+    setActiveTransactions: (state, action) => {
+      state.activeTransactions = action.payload;
+    },
+    setActiveDate: (state, action) => {
+      state.activeDate = action.payload;
+    },
+    setDateFilterSelected: (state, action) => {
+      state.dateFilterSelected = action.payload;
+    },
     setActiveTransactionsByDateFilter: (state, action) => {
       state.activeDate = action.payload.date;
       state.dateFilterSelected = action.payload.filter;
@@ -55,6 +64,9 @@ export const {
   setIsLoading,
   setSelectedAccount, 
   setTransactions, 
+  setActiveTransactions,
+  setActiveDate,
+  setDateFilterSelected,
   setActiveTransactionsByDateFilter, 
   setTransaction 
 } = pocketfySlice.actions;

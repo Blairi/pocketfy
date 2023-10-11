@@ -1,26 +1,47 @@
 import { 
   setAccounts, setIsLoading, setSelectedAccount, setTransaction, 
-  setTransactions, setActiveTransactionsByDateFilter, setCategories 
+  setTransactions, setCategories, setActiveTransactions, setActiveDate, setDateFilterSelected 
 } from "./PocketfySlice";
-import { loadLocalAccounts, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
-import { loadExpensesCategories, loadIncomesCategories } from "../../service/online";
+import { loadLocalAccounts, loadLocalExpensesCategories, loadLocalIncomesCategories, loadLocalTransactions, saveLocalTransaction } from "../../service/local";
 import dayjs from "dayjs";
 
 export const startLoadingApp = () => {
   return async(dispatch) => {
     dispatch( startLoadingAccounts() );
-    dispatch( startSelectAccount(-1) ); // -1: All accounts
     dispatch( startLoadingTransactions() );
-    dispatch( startSetActiveTransactionsByDateFilter(dayjs(), "day") );
     dispatch( startLoadingCategories() );
+    
+    // TODO: load the args from the user's preference
+    dispatch( setActiveDate(dayjs().toString()) );
+    dispatch( setDateFilterSelected("day") );
+    dispatch( setSelectedAccount({id: 1, name: "default"}) );
+
+    dispatch( startSetActiveTransactions() );
+  }
+}
+
+export const startSetActiveTransactions = () => {
+  return async(dispatch, getState) => {
+
+    const { 
+      transactions, 
+      activeDate, dateFilterSelected, accountSelected 
+    } = getState().pocketfy;
+
+    let activeTransactions = transactions.filter((transaction) => (
+      dayjs(transaction.date).isSame(activeDate, dateFilterSelected)
+      &&
+      transaction.account === accountSelected.id
+    ));
+
+    dispatch(setActiveTransactions( activeTransactions ));
   }
 }
 
 export const startLoadingCategories = () => {
   return async(dispatch) => {
-    dispatch( setIsLoading() );
-    const expenses = await loadExpensesCategories();
-    const incomes = await loadIncomesCategories();
+    const expenses = loadLocalExpensesCategories();
+    const incomes = loadLocalIncomesCategories();
 
     dispatch( setCategories({ expenses, incomes }) );
   }
@@ -34,17 +55,6 @@ export const startLoadingAccounts = () => {
     accounts = loadLocalAccounts();
 
     dispatch( setAccounts(accounts) );
-  }
-}
-
-export const startSelectAccount = (id) => {
-  return async(dispatch, getState) => {
-
-    const { accounts } = getState().pocketfy;
-
-    const accountFound = accounts.find((account) => account.id === id);
-
-    dispatch( setSelectedAccount(accountFound) );
   }
 }
 
@@ -74,27 +84,5 @@ export const startLoadingTransactions = () => {
     transactions = loadLocalTransactions();
 
     dispatch( setTransactions(transactions) );
-  }
-}
-
-export const startSetActiveTransactionsByDateFilter = (date = dayjs(), filter) => {
-  return async(dispatch, getState) => {
-
-    dispatch( setIsLoading() );
-
-    const { transactions } = getState().pocketfy;
-
-    const transactionsFiltered = transactions.filter(transaction => {
-      if ( dayjs(transaction.date).isSame(date, filter) ) {
-        return transaction;
-      }
-    });
-
-    dispatch( setActiveTransactionsByDateFilter({ 
-      transactionsFiltered, 
-      filter, 
-      date: date.startOf(filter).toString(),
-    }));
-
   }
 }

@@ -1,12 +1,9 @@
 import { usePocketfyStore } from "../../hooks/usePocketfyStore";
+import { AccountItem } from "./AccountItem";
 
 export const AccountSelector = () => {
 
-  const { accounts, accountSelected, onStartSelectAccount } = usePocketfyStore();
-
-  const selectAccount = (id) => {
-    onStartSelectAccount(id);
-  }
+  const { accounts, accountSelected } = usePocketfyStore();
 
   return (
     <div className="dropdown flex">
@@ -26,13 +23,10 @@ export const AccountSelector = () => {
 
             if(account.id !== accountSelected?.id){
               return(
-                <li key={key}>
-                  <button
-                    className="btn btn-outline btn-accent"
-                    onClick={ () => selectAccount(account.id) }
-                  >{account.name}
-                  </button>
-                </li>
+                <AccountItem 
+                  account={account} 
+                  key={key}
+                />
               )
             }
 

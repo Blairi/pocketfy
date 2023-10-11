@@ -4,7 +4,7 @@ import { usePocketfyStore } from "../../../../hooks";
 
 export const Home = () => {
 
-  const { accountSelected } = usePocketfyStore();
+  const { accountSelected, activeTransactions } = usePocketfyStore();
 
   return (
 
@@ -15,16 +15,26 @@ export const Home = () => {
         <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
       </div>
 
-      <div className="w-[80%] mx-auto space-y-5">
+      {
+        activeTransactions.length > 0
+        ? <>
+          <div className="w-[80%] mx-auto space-y-5">
 
-        <NavButton
-          path="/balance"
-          text="Balance"
-        />
+            <NavButton
+              path="/balance"
+              text="Balance"
+            />
 
-        <TransactionsPie />
+            <TransactionsPie />
 
-      </div>
+          </div>
+        </>
+        : 
+        <div className="text-center">
+          <p>Not have transaction in this date yet, create a new one!</p>
+        </div>
+      }
+
 
     </div>
 
