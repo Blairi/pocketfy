@@ -1,37 +1,42 @@
-import { useSelector } from "react-redux"
+import { TransactionsPie } from "./";
 import { NavButton } from "../../../../components";
-import { DateSelection } from "../../../components";
-import { NewTransaction, PieChart, TopBar } from "./"
+import { usePocketfyStore } from "../../../../hooks";
 
 export const Home = () => {
 
-  const { accountSelected } = useSelector(state => state.pocketfy);
+  const { accountSelected, activeTransactions } = usePocketfyStore();
 
   return (
-    <main className="space-y-10 mt-5">
 
-      <div className="animate__animated animate__fadeInUp space-y-10">
+    <div className="space-y-2">
 
-        <TopBar />
-
-        <DateSelection />
-
-        <div className="text-center">
-          <span className="text-xs">Account Selected</span>
-          <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
-        </div>
-
-        <PieChart />
-
-        <NavButton 
-          path="/balance"
-          text="Balance"
-        />
-
-        <NewTransaction />
-
+      <div className="text-center">
+        <span className="text-xs">Account Selected</span>
+        <h2 className="text-lg text-primary font-black">{accountSelected?.name}</h2>
       </div>
 
-    </main>
+      {
+        activeTransactions.length > 0
+        ? <>
+          <div className="w-[80%] mx-auto space-y-5">
+
+            <NavButton
+              path="/balance"
+              text="Balance"
+            />
+
+            <TransactionsPie />
+
+          </div>
+        </>
+        : 
+        <div className="text-center">
+          <p>Not have transaction in this date yet, create a new one!</p>
+        </div>
+      }
+
+
+    </div>
+
   )
 }

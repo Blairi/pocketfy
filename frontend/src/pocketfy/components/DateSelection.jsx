@@ -1,12 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { usePocketfyStore } from "../../hooks/usePocketfyStore";
 import dayjs from "dayjs";
-import { startSetActiveTransactionsByDateFilter } from "../../store/pocketfy/thunks";
 
 export const DateSelection = () => {
 
-  const { dateFilterSelected, activeDate } = useSelector(state => state.pocketfy);
-
-  const dispatch = useDispatch();
+  const { dateFilterSelected, activeDate, onStartSetActiveDate } = usePocketfyStore();
 
   const manipulateDate = (add = true) => {
     let date = dayjs(activeDate);
@@ -16,7 +13,7 @@ export const DateSelection = () => {
     else
       date = date.subtract(1, dateFilterSelected);
 
-    dispatch( startSetActiveTransactionsByDateFilter(date, dateFilterSelected) );
+    onStartSetActiveDate(date.toString());
   }
 
   return (

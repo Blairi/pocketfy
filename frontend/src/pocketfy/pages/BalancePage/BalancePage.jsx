@@ -1,38 +1,31 @@
-import { useSelector } from "react-redux"
 import { BackButton } from "../../../components";
-import { DateFilterSelection, DateSelection, TotalBalance } from "../../components";
+import { TotalBalance } from "../../components";
 import { TransactionList } from "./components";
+import { PocketfyLayout } from "../../layout/PocketfyLayout";
+import { usePocketfyStore } from "../../../hooks";
 
 export const BalancePage = () => {
 
-  const { activeTransactions } = useSelector(state => state.pocketfy);
+  const { activeTransactions } = usePocketfyStore();
 
   return (
-    <div className="py-5 min-h-screen w-[90%] max-w-[1280px] mx-auto space-y-5">
-
-      <BackButton />
-
-      <div className="animate__animated animate__fadeInUp space-y-5">
-
-        <DateSelection />
+    <PocketfyLayout>
+      <div className="space-y-5">
+        <BackButton />
 
         <TotalBalance />
 
-        <DateFilterSelection />
-
-        <div className="space-y-5">
+        <div className="pb-20">
           {
-            activeTransactions.length === 0 
-            ?
+            activeTransactions.length === 0
+              ?
               <div className="text-center">
                 <p>Not have transaction in this date yet, create a new one!</p>
               </div>
-
-            : <TransactionList />
+              : <TransactionList />
           }
         </div>
-
       </div>
-    </div>
+    </PocketfyLayout>
   )
 }

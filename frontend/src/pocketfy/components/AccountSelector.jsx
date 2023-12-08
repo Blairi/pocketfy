@@ -1,15 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
-import { startSelectAccount } from "../../../../store/pocketfy/thunks";
+import { usePocketfyStore } from "../../hooks/usePocketfyStore";
+import { AccountItem } from "./AccountItem";
 
 export const AccountSelector = () => {
 
-  const { accounts, accountSelected } = useSelector(state => state.pocketfy);
-
-  const dispatch = useDispatch();
-
-  const selectAccount = (id) => {
-    dispatch( startSelectAccount(id) );
-  }
+  const { accounts, accountSelected } = usePocketfyStore();
 
   return (
     <div className="dropdown flex">
@@ -29,13 +23,10 @@ export const AccountSelector = () => {
 
             if(account.id !== accountSelected?.id){
               return(
-                <li key={key}>
-                  <button
-                    className="btn btn-outline btn-accent"
-                    onClick={ () => selectAccount(account.id) }
-                  >{account.name}
-                  </button>
-                </li>
+                <AccountItem 
+                  account={account} 
+                  key={key}
+                />
               )
             }
 

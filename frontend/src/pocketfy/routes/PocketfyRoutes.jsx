@@ -1,17 +1,16 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { Route, Routes } from "react-router-dom"
-import { startLoadingApp } from "../../store/pocketfy/thunks"
 import { PocketfyPage } from "../pages/PocketfyPage"
 import { NewTransactionPage } from "../pages/TransactionPage"
 import { BalancePage } from "../pages/BalancePage/BalancePage"
+import { usePocketfyStore } from "../../hooks"
 
 export const PocketfyRoutes = () => {
 
-  const dispacth = useDispatch();
+  const { onStartLoadingApp } = usePocketfyStore();
 
   useEffect(() => {
-    dispacth( startLoadingApp() );
+    onStartLoadingApp();
   }, []);
 
   return (

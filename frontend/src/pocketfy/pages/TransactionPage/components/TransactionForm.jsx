@@ -1,7 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
-import { startSetTransaction } from "../../../../store/pocketfy/thunks";
+import { InputErrorMessage } from "../../../../components/form";
+import { usePocketfyStore } from "../../../../hooks";
+import dayjs from "dayjs";
 
 const DepositsIcon = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -11,18 +13,23 @@ const DepositsIcon = () => {
 
 export const TransactionForm = ({ type }) => {
 
-  const { accounts, accountSelected, categories } = useSelector(state => state.pocketfy);
-
-  const dispatch = useDispatch();
+  const { accounts, accountSelected, categories, onStartSetTransaction } = usePocketfyStore();
 
   const navigate = useNavigate();
+
+  const categoriesType = useMemo(() => {
+    if (type === "expense") {
+      return categories.expenses;
+    }
+    return categories.incomes;
+  }, [categories]);
 
   const onSubmit = (values) => {
     if(type === "expense") {
       values.amount = -1 * values.amount;
     }
     // Save transaction
-    dispatch( startSetTransaction(values) );
+    onStartSetTransaction(values);
 
     navigate(-1);
   }
@@ -52,8 +59,27 @@ export const TransactionForm = ({ type }) => {
           account: accountSelected?.id,
           date: new Date().toISOString().slice(0, 10),
         }}
+        validate={(values) => {
+          let errors = {};
+          if (values.amount <= 0 || values.amount > 100000) {
+            errors.amount = "The Amount should be between 0 and 100000";
+          }
+          if (values.category == '' || values.category === undefined) {
+            errors.category = "Choose a category";
+          }
+          if (values.account == '' || values.account === undefined) {
+            errors.account = "Choose a account";
+          }
+          if (!dayjs(values.date).isValid()) {
+            errors.date = "Choose a valid date";
+          }
+          if (values.description.length > 100) {
+            errors.description = "The Description should be less than 100 characters";
+          }
+          return errors;
+        }}
       >
-        {({ values }) => (
+        {({ touched, values, errors, isValid }) => (
           <Form>
             <div className="px-3 py-5 grid place-items-center space-y-5">
 
@@ -74,6 +100,11 @@ export const TransactionForm = ({ type }) => {
                     name="amount"
                   />
                 </div>
+                {touched.amount && errors.amount && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.amount}/>
+                  </div>
+                }
               </div>
 
               <div className="form-control w-full max-w-xs">
@@ -85,8 +116,13 @@ export const TransactionForm = ({ type }) => {
                   as="textarea"
                   rows="4"
                   name="description"
-                  className="textarea textarea-bordered resize-none"
+                  className={`textarea textarea-bordered resize-none ${touched.description && errors.description ? "textarea-error" : ""}`}
                 />
+                {touched.description && errors.description && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.description}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
@@ -94,7 +130,7 @@ export const TransactionForm = ({ type }) => {
                   <span className="label-text">Choose a category</span>
                 </label>
                 <div className="flex gap-2 flex-wrap">
-                  {categories.map((category, key) => (
+                  {categoriesType.map((category, key) => (
                     <label 
                       key={ key }
                       htmlFor={`category-${category.id}`}
@@ -113,6 +149,11 @@ export const TransactionForm = ({ type }) => {
                     </label>
                   ))}
                 </div>
+                {touched.category && errors.category && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.category}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
@@ -134,13 +175,18 @@ export const TransactionForm = ({ type }) => {
                             type="radio"
                             name="account"
                             className="hidden"
-                            value={account.id}
+                            value={parseInt(account.id)}
                             id={`account-${account.id}`}
                           />
                         </label>
                     ))
                   }
                 </div>
+                {touched.account && errors.account && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.account}/>
+                  </div>
+                }
 
               </div>
 
@@ -155,10 +201,18 @@ export const TransactionForm = ({ type }) => {
                     name="date"
                   />
                 </div>
+                {touched.date && errors.date && 
+                  <div className="mt-3">
+                    <InputErrorMessage message={errors.date}/>
+                  </div>
+                }
               </div>
 
               <div className="w-full max-w-xs">
-                <button className="btn btn-primary w-full" type="submit">Save</button>
+                <button 
+                  className={`btn btn-primary w-full ${!isValid ? "btn-disabled" : ""}`}
+                  type="submit"
+                >Save</button>
               </div>
 
             </div>
