@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Route, Routes } from "react-router-dom"
+import { Link, Route, Routes } from "react-router-dom"
 import { PocketfyPage } from "../pages/PocketfyPage"
 import { NewTransactionPage } from "../pages/TransactionPage"
 import { BalancePage } from "../pages/BalancePage/BalancePage"
@@ -15,6 +15,14 @@ export const PocketfyRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/" element={
+        <div className="grid place-items-center w-screen h-screen">
+          <div>
+            <h1>Testing Deploy</h1>
+            <Link to="/home" className="underline">Home</Link>
+          </div>
+        </div>
+      } />
       <Route path="/home" element={<PocketfyPage />} />
       <Route path="/new-transaction/:type" element={<NewTransactionPage />} />
       <Route path="/balance" element={<BalancePage />} />
